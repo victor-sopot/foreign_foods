@@ -181,21 +181,10 @@ label {
   background-color: #DEA795 !important;
 }
 
-.btn-login {
-  color: white !important;
-  background-color: #44918B !important;
-  padding: 15px;
-}
-.btn-login:focus,
-.btn-login.focus {
-  color: white !important;
-  background-color: #86B0A2 !important;
-}
-.btn-login:hover {
-  color: white !important;
-  background-color: #86B0A2 !important;
-}
 
+  .btn-login {
+  color: #222;
+}
 
 /* ==========================================================================
    Helper classes
@@ -326,10 +315,24 @@ textarea[contenteditable] {
     text-shadow: 1px 2px 0px #91827A;
   }
 
-
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-       only screen and (min-resolution: 144dpi) {
-    /* Style adjustments for viewports that meet the condition */
+@media only screen and (min-width: 768px) {
+
+  .btn-login {
+    color: white !important;
+    background-color: #44918B !important;
+    padding: 15px;
+  }
+
+  .btn-login:focus,
+  .btn-login.focus {
+    color: white !important;
+    background-color: #86B0A2 !important;
+  }
+
+  .btn-login:hover {
+    color: white !important;
+    background-color: #86B0A2 !important;
+  }
 }
