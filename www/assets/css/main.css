@@ -1,0 +1,335 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+    font-size: 62.5%;
+}
+
+a {
+    color: #00e;
+}
+
+a:visited {
+    color: #551a8b;
+}
+
+a:hover {
+    color: #06e;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+
+img {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+@font-face {
+  font-family: Diner;
+  src: url('../fonts/Diner-Obese-webfont.ttf') format('truetype'),
+  url('../fonts/Diner-Obese-webfont.svg#webfont') format('svg');
+}
+
+@font-face {
+  font-family: DinerFatt;
+  src: url('../fonts/Diner-Fatt-webfont.ttf') format('truetype'),
+  url('../fonts/Diner-Fatt-webfont.svg#webfont') format('svg');
+}
+
+@font-face {
+  font-family: Daniel;
+  src: url('../fonts/daniel-webfont.ttf') format('truetype'),
+  url('../fonts/daniel-webfont.svg#webfont') format('svg');
+}
+
+@font-face {
+  font-family: DanielBlack;
+  src: url('../fonts/Daniel-Black-webfont.ttf') format('truetype'),
+  url('../fonts/Daniel-Black-webfont.svg#webfont') format('svg');
+}
+
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  background-color: #B5DEDA;
+}
+
+.row {
+  margin-bottom: 40px;
+}
+
+.pageTitle {
+  font-family: Diner;
+  text-align: center;
+  font-size: 7.2rem;
+  color: white;
+  text-shadow: 1px 1px 0px #44918B;
+}
+
+#locInput {
+  background-color: #44918B;
+  color: white;
+  border: none;
+  height: 50px;
+}
+
+#cuisineInput {
+  background-color: #44918B;
+  color: white;
+  border: none;
+  height: 50px; 
+  padding-left: 10px;
+}
+
+#search {
+  background-color: #DE8154;
+  color: white;
+  font-family: DanielBlack;
+  height: 50px;
+  width: 100px;
+  margin: 0 auto;
+}
+
+#resultsPane {
+  background-color: #44918B;
+  width: 100%;
+  color: white;
+  padding: 20px 5px;
+}
+
+.panelHead {
+  font-family: Daniel;
+}
+
+#selectedRest {
+  background-color: white;
+  width: 80%;
+  color: #91827A;
+  padding: 20px 15px;
+  margin: 0 auto;
+  border: 4px solid #DE8154;
+}
+
+.selectedHead {
+  font-family: DinerFatt;
+  text-align: center;
+}
+
+.selectedBody {
+  text-align: center; 
+}
+
+label {
+  color: #44918B;
+}
+
+#userPage {
+  display: none;
+}
+
+#logout, #login {
+  display: none;
+}
+
+.btn-account {
+  color: white !important;
+  background-color: #DE8154 !important;
+  padding: 15px;
+}
+.btn-account:focus,
+.btn-account.focus {
+  color: white !important;
+  background-color: #DEA795 !important;
+}
+.btn-account:hover {
+  color: white !important;
+  background-color: #DEA795 !important;
+}
+
+.btn-login {
+  color: white !important;
+  background-color: #44918B !important;
+  padding: 15px;
+}
+.btn-login:focus,
+.btn-login.focus {
+  color: white !important;
+  background-color: #86B0A2 !important;
+}
+.btn-login:hover {
+  color: white !important;
+  background-color: #86B0A2 !important;
+}
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/* Center column */
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+/* Prevent callout */
+
+.nocallout {
+    -webkit-touch-callout: none;
+}
+
+.pressed {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* A hack for HTML5 contenteditable attribute on mobile */
+
+textarea[contenteditable] {
+    -webkit-appearance: none;
+}
+
+/* A workaround for S60 3.x and 5.0 devices which do not animated gif images if
+   they have been set as display: none */
+
+.gifhidden {
+    position: absolute;
+    left: -100%;
+}
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: 0;
+    direction: ltr;
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    text-indent: -999em;
+}
+
+.ir br {
+    display: none;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/**
+ * Clearfix helper
+ * Used to contain floats: h5bp.com/q
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   Theses examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 480px) {
+    /* Style adjustments for viewports that meet the condition */
+
+  .pageTitle {
+    font-size: 15.0rem;
+    text-shadow: 1px 2px 0px #91827A;
+  }
+
+
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (min-resolution: 144dpi) {
+    /* Style adjustments for viewports that meet the condition */
+}
