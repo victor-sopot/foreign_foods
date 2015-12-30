@@ -81,6 +81,57 @@ $(document).ready(function(){
 		console.log(error);
 		alert(error);
 	}
+	// var cuisines = [];
+	$.ajax({
+		url: 'https://api.foursquare.com/v2/venues/categories',
+		data: {
+			client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+			client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+			v: 20151230,
+			m: 'foursquare'
+		}
+	})
+	.done(function(response){
+		var cuisines = response.response.categories[3].categories;
+		console.log(cuisines);
+		$.each(cuisines, function(key, cuisines ) {
+			console.log(cuisines.shortName);
+			$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
+		});
+
+	});
+
+	$("#search").on('click', function() {
+		var loc = $("#locInput").val();
+		var category = $("#cuisineInput option:selected").val();
+
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/search',
+			data: {
+				near: loc,
+				limit: 50,
+				intent: 'browse',
+				categoryId: category,
+				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+				v: 20151230,
+				m: 'foursquare'
+			}
+		})
+		.done(function(response){
+			var venues = response.response.venues;
+			console.log(venues);
+			$.each(venues, function(key, venues ) {
+				console.log(venues.categories[0].icon);
+				var name = venues.name;
+				var lat = venues.location.lat;
+				var lng = venues.location.lng;
+				$("#results").append($("<li data-venue-id='" + venues.id + "' ><h3 class='resultName'>" + name + "</h3></div><span>" + lat + ", </span><span>" + lng + "</span></li>" ));
+			});
+
+			//$("#results").
+		});
+	});
 
 });
 
