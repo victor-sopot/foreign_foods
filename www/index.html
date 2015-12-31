@@ -78,20 +78,20 @@
           </div><!-- /.container-fluid -->
         </nav>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <h1 class="pageTitle">Foreign Foods</h1>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <label for="locInput">Enter Location</label>
                 <input id="locInput" type="text" class="form-control">
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <label for="cuisineInput">Choose a cuisine</label>
                 <select id="cuisineInput" class="form-control">
                     <option> - Select Cuisine - </option>
@@ -100,25 +100,25 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <button id="search" type="button" class="btn btn-default">Go!</button>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
+                <h2 class="panelHead">Results</h2>
                 <div id="resultsPane">
-                    <h2 class="panelHead">Results</h2>
-
-                    <ul id="results" class="list-unstyled">
+                    <div id="map"></div>
+                    <!-- <ul id="results" class="list-unstyled">
                         
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div id="selectedRest">
                     <h3 class="selectedHead">Restaurant Name</h3>
 
@@ -129,7 +129,7 @@
     </div>
 
         <!-- Add your site or application content here -->
-
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWX09Ik2jlbjpjHzN9c59zO_2H9JYQlsE&region=GB" type="text/javascript"></script>
         <script src="assets/vendor/jquery-2.1.0.min.js"></script>
         <script src="/_api/_files/hoodie.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>

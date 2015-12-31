@@ -36,7 +36,7 @@ $(document).ready(function(){
   			checkuser();
   		})
   		.fail(showErrorMessage);
-	})
+	});
 
 	function checkuser() {
 		if(hoodie.account.username){
@@ -81,7 +81,7 @@ $(document).ready(function(){
 		console.log(error);
 		alert(error);
 	}
-	// var cuisines = [];
+
 	$.ajax({
 		url: 'https://api.foursquare.com/v2/venues/categories',
 		data: {
@@ -91,15 +91,15 @@ $(document).ready(function(){
 			m: 'foursquare'
 		}
 	})
-	.done(function(response){
-		var cuisines = response.response.categories[3].categories;
-		console.log(cuisines);
-		$.each(cuisines, function(key, cuisines ) {
-			console.log(cuisines.shortName);
-			$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
-		});
+		.done(function(response){
+			var cuisines = response.response.categories[3].categories;
+			console.log(cuisines);
+			$.each(cuisines, function(key, cuisines ) {
+				console.log(cuisines.shortName);
+				$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
+			});
 
-	});
+		});
 
 	$("#search").on('click', function() {
 		var loc = $("#locInput").val();
@@ -126,13 +126,26 @@ $(document).ready(function(){
 				var name = venues.name;
 				var lat = venues.location.lat;
 				var lng = venues.location.lng;
-				$("#results").append($("<li data-venue-id='" + venues.id + "' ><h3 class='resultName'>" + name + "</h3></div><span>" + lat + ", </span><span>" + lng + "</span></li>" ));
-			});
 
-			//$("#results").
+				var latlng = new google.maps.LatLng(lat,lng);
+
+				var marker = new google.maps.Marker({
+					position: latlng,
+					title: name
+				});
+
+				marker.setMap(map);
+
+				//$("#results").append($("<li data-venue-id='" + venues.id + "' ><h3 class='resultName'>" + name + "</h3></div><span>" + lat + ", </span><span>" + lng + "</span></li>" ));
+			});
 		});
 	});
 
+	var map;
+	map = new google.maps.Map(document.getElementById("map"), {
+		center: {lat: -34.397, lng: 150.644},
+		zoom: 8
+	});
 });
 
 

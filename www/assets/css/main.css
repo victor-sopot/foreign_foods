@@ -128,12 +128,19 @@ body {
 #resultsPane {
   background-color: #44918B;
   width: 100%;
+  height: 600px;
   color: white;
   padding: 20px;
 }
 
+#map {
+  height: 100%;
+}
+
 .panelHead {
   font-family: Daniel;
+  font-size: 7rem;
+  color: #44918B;
 }
 
 #resultsPane ul li {
@@ -195,7 +202,7 @@ label {
 }
 
 
-  .btn-login {
+.btn-login {
   color: #222;
 }
 
