@@ -155,6 +155,7 @@ body {
 }
 
 #selectedHead {
+  font-size: 7.2rem;
   font-family: DinerFatt;
   text-align: center;
 }

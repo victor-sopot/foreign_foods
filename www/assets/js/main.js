@@ -138,11 +138,23 @@ $(document).ready(function(){
 				marker.setMap(map);
 
 				marker.addListener('click', function() {
-					$("#selectedRest").show();
+					bindInfoContainer(name, latlng);
 				})
 			});
 		});
 	});
+
+	function bindInfoContainer(name, latlng) {
+		$("#selectedRest").show();
+		$("#selectedHead").text(name);
+	}
+
+	$("#saveRestaurant").on('click', function () {
+		hoodie.store.add('venue', { name : name, coords : latlng })
+		.done(function(){
+			alert('hello');
+		})
+	})
 
 	// Init Google map
 	var map;
