@@ -4,6 +4,7 @@ var hoodie = new Hoodie();
 
 $(document).ready(function(){
 
+	// Check if there's a user logged in
 	checkuser();
 
 	$("#loginForm").submit(function(event) {
@@ -12,7 +13,6 @@ $(document).ready(function(){
 	  	var password  = $('#password').val();
 	  	hoodie.account.signIn(username, password)
 	    	.done(function (user) {
-	    		// checkuser();
 	    		window.location = "/";
 	    	})
 	    	.fail(showErrorMessage);
@@ -24,7 +24,6 @@ $(document).ready(function(){
 		var new_password = $("#new_password").val();
 		hoodie.account.signUp(new_username, new_password)
 			.done(function (user) {
-				// checkuser();
 	    		window.location = "/";
 			})
 			.fail(showErrorMessage);
@@ -33,7 +32,7 @@ $(document).ready(function(){
 	$("#logout").on('click', function(){
 		hoodie.account.signOut()
   		.done(function (user) {
-  			checkuser();
+  			window.location = "/";
   		})
   		.fail(showErrorMessage);
 	});
@@ -82,6 +81,8 @@ $(document).ready(function(){
 		alert(error);
 	}
 
+
+	// Load up the restaurant categories from the foursquare API
 	$.ajax({
 		url: 'https://api.foursquare.com/v2/venues/categories',
 		data: {
@@ -91,16 +92,17 @@ $(document).ready(function(){
 			m: 'foursquare'
 		}
 	})
-		.done(function(response){
-			var cuisines = response.response.categories[3].categories;
-			console.log(cuisines);
-			$.each(cuisines, function(key, cuisines ) {
-				console.log(cuisines.shortName);
-				$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
-			});
-
+	// Place them in the select box
+	.done(function(response){
+		var cuisines = response.response.categories[3].categories;
+		console.log(cuisines);
+		$.each(cuisines, function(key, cuisines ) {
+			$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
 		});
 
+	});
+
+	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
@@ -118,33 +120,31 @@ $(document).ready(function(){
 				m: 'foursquare'
 			}
 		})
+		// Plot them on Google Map
 		.done(function(response){
 			var venues = response.response.venues;
-			console.log(venues);
+			var responseGeocode = response.response.geocode.feature.geometry.center;
+			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
+			map.panTo(geocode);
 			$.each(venues, function(key, venues ) {
-				console.log(venues.categories[0].icon);
 				var name = venues.name;
 				var lat = venues.location.lat;
 				var lng = venues.location.lng;
-
 				var latlng = new google.maps.LatLng(lat,lng);
-
 				var marker = new google.maps.Marker({
 					position: latlng,
 					title: name
 				});
-
 				marker.setMap(map);
-
-				//$("#results").append($("<li data-venue-id='" + venues.id + "' ><h3 class='resultName'>" + name + "</h3></div><span>" + lat + ", </span><span>" + lng + "</span></li>" ));
 			});
 		});
 	});
 
+	// Init Google map
 	var map;
 	map = new google.maps.Map(document.getElementById("map"), {
-		center: {lat: -34.397, lng: 150.644},
-		zoom: 8
+		center: {lat: 51.465839, lng: -2.587283},
+		zoom: 12
 	});
 });
 
