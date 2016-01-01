@@ -105,15 +105,14 @@ $(document).ready(function(){
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
 		var loc = $("#locInput").val();
-		var category = $("#cuisineInput option:selected").val();
+		var category = $("#cuisineInput option:selected").text();
 
 		$.ajax({
-			url: 'https://api.foursquare.com/v2/venues/search',
+			url: 'https://api.foursquare.com/v2/venues/explore',
 			data: {
 				near: loc,
 				limit: 50,
-				intent: 'browse',
-				categoryId: category,
+				query: category,
 				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
 				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
 				v: 20151230,
@@ -122,14 +121,14 @@ $(document).ready(function(){
 		})
 		// Plot them on Google Map
 		.done(function(response){
-			var venues = response.response.venues;
-			var responseGeocode = response.response.geocode.feature.geometry.center;
+			var venues = response.response.groups[0].items;
+			var responseGeocode = response.response.geocode.center;
 			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
 			map.panTo(geocode);
 			$.each(venues, function(key, venues ) {
-				var name = venues.name;
-				var lat = venues.location.lat;
-				var lng = venues.location.lng;
+				var name = venues.venue.name;
+				var lat = venues.venue.location.lat;
+				var lng = venues.venue.location.lng;
 				var latlng = new google.maps.LatLng(lat,lng);
 				var marker = new google.maps.Marker({
 					position: latlng,
