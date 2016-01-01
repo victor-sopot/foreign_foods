@@ -136,6 +136,10 @@ $(document).ready(function(){
 					title: name
 				});
 				marker.setMap(map);
+
+				marker.addListener('click', function() {
+					$("#selectedRest").show();
+				})
 			});
 		});
 	});
