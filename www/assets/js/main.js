@@ -146,10 +146,17 @@ $(document).ready(function(){
 
 	function bindInfoContainer(name, latlng) {
 		$("#selectedRest").show();
+		$("#selectedRest").attr('data-name', name);
+		$("#selectedRest").attr('data-latlng', latlng);
+
 		$("#selectedHead").text(name);
+		$("#selectedLatLng").text(latlng);
 	}
 
 	$("#saveRestaurant").on('click', function () {
+		var name = $("#selectedRest").attr('data-name');
+		var latlng = $("#selectedRest").attr('data-latlng');
+
 		hoodie.store.add('venue', { name : name, coords : latlng })
 		.done(function(){
 			alert('hello');
