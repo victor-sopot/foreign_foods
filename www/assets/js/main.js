@@ -127,6 +127,7 @@ $(document).ready(function(){
 			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
 			map.panTo(geocode);
 			$.each(venues, function(key, venues ) {
+				var venueID = venues.id;
 				var name = venues.name;
 				var lat = venues.location.lat;
 				var lng = venues.location.lng;
@@ -138,26 +139,42 @@ $(document).ready(function(){
 				marker.setMap(map);
 
 				marker.addListener('click', function() {
-					bindInfoContainer(name, latlng);
+					bindInfoContainer(venueID, name, latlng);
 				})
 			});
 		});
 	});
 
-	function bindInfoContainer(name, latlng) {
+	function bindInfoContainer(venueID, name, latlng) {
+
+		// $.ajax HERE
+
+		var addr = 'Flat 5 blabla BW4 FEE';
+		var tel = '4443337';
+		var url = 'http://www.google.com';
+
 		$("#selectedRest").show();
+		$("#selectedRest").attr('data-venue-id', venueID);
 		$("#selectedRest").attr('data-name', name);
 		$("#selectedRest").attr('data-latlng', latlng);
+		$("#selectedRest").attr('data-addr', addr);
+		$("#selectedRest").attr('data-tel', tel);
+		$("#selectedRest").attr('data-url', url);
 
 		$("#selectedHead").text(name);
 		$("#selectedLatLng").text(latlng);
+		$("#address").text('Address: ' + addr);
+		$("#telephone").text('Telephone: ' + tel);
+		$("#url").text('URL: ' + url);
 	}
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
 		var latlng = $("#selectedRest").attr('data-latlng');
-
-		hoodie.store.add('venue', { name : name, coords : latlng })
+		var addr = $("#selectedRest").attr('data-addr');
+		var tel = $("#selectedRest").attr('data-tel');
+		var url = $("#selectedRest").attr('data-url');
+		hoodie.store.add('venue', { name : name, coords : latlng, address: addr, telephone: tel, url: url })
 		.done(function(){
 			alert('hello');
 		})
