@@ -56,6 +56,8 @@ $(document).ready(function(){
 			$("#login").hide();
 			$("#logout").show();
 
+			$("#saveRestaurant").show();			
+
 		} else {
 			
 			//Show the form by default (not logged in)
@@ -73,6 +75,8 @@ $(document).ready(function(){
 			$("#register").show();
 			$("#login").show();
 			$("#logout").hide();
+
+			$("#saveRestaurant").hide();
 		}
 	}
 
@@ -149,9 +153,6 @@ $(document).ready(function(){
 
 				marker.addListener('click', function() {
 					bindInfoContainer(venueID, name, latlng);
-					$('html, body').animate({
-    	    			scrollTop: $("#selectedRest").offset().top
-   	 				}, 1200);
 				})
 			});
 		});
@@ -159,7 +160,6 @@ $(document).ready(function(){
 
 	function bindInfoContainer(venueID, name, latlng) {
 		$("#loader2").toggle();
-
 		$.ajax({
 			url: 'https://api.foursquare.com/v2/venues/' + venueID,
 			data: {
@@ -180,6 +180,8 @@ $(document).ready(function(){
 			var postcode = getProperty(venue.location, 'postalCode');
 			var url = getProperty(venue, 'url');
 
+			$("#address").html("");
+
 			$("#selectedRest").show();
 			$("#selectedRest").attr('data-venue-id', venueID);
 			$("#selectedRest").attr('data-name', name);
@@ -198,6 +200,10 @@ $(document).ready(function(){
 			$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
 			$("<dt>Telephone: </dt><dd>" + venueTel + "</dd>").appendTo("#address");
 			$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+
+			$('html, body').animate({
+    	    	scrollTop: $("#selectedRest").offset().top
+   	 		}, 1200);
 		});
 	}
 
