@@ -102,6 +102,7 @@
         <div class="row">
             <div class="col-md-12">
                 <button id="search" type="button" class="btn btn-default">Go!</button>
+                <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
             </div>
         </div>
 
@@ -116,14 +117,14 @@
 
         <div class="row">
             <div class="col-md-12">
+            <img id="loader2" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
                 <div id="selectedRest">
                     <h3 id="selectedHead"></h3>
-                    
-                    <p id="address"></p>
+                    <dl id="address" class="dl-horizontal">
+                    </dl>
                     <p id="telephone"></p>
                     <p id="url"></p>
-
-                    <p id="selectedBody"><button id="saveRestaurant" class="btn btn-default">Save</button></p>
+                    <button id="saveRestaurant" class="btn btn-default">Save</button>
                 </div>
             </div>
         </div>

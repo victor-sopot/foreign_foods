@@ -95,7 +95,6 @@ $(document).ready(function(){
 	// Place them in the select box
 	.done(function(response){
 		var cuisines = response.response.categories[3].categories;
-		console.log(cuisines);
 		$.each(cuisines, function(key, cuisines ) {
 			$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
 		});
@@ -104,8 +103,17 @@ $(document).ready(function(){
 
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
+		
+		//Scroll down to map
+		$('html, body').animate({
+        	scrollTop: $("#resultsPane").offset().top
+    	}, 1200);
+
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
+
+		// Spinner
+		$("#loader1").toggle();
 
 		$.ajax({
 			url: 'https://api.foursquare.com/v2/venues/search',
@@ -122,6 +130,7 @@ $(document).ready(function(){
 		})
 		// Plot them on Google Map
 		.done(function(response){
+			$("#loader1").toggle();
 			var venues = response.response.venues;
 			var responseGeocode = response.response.geocode.feature.geometry.center;
 			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
@@ -140,41 +149,87 @@ $(document).ready(function(){
 
 				marker.addListener('click', function() {
 					bindInfoContainer(venueID, name, latlng);
+					$('html, body').animate({
+    	    			scrollTop: $("#selectedRest").offset().top
+   	 				}, 1200);
 				})
 			});
 		});
 	});
 
 	function bindInfoContainer(venueID, name, latlng) {
+		$("#loader2").toggle();
 
-		// $.ajax HERE
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/' + venueID,
+			data: {
+				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+				v: 20151230,
+				m: 'foursquare'
+			}
+		})
+		.done(function(response) {
+			$("#loader2").toggle();
+			var venue = response.response.venue;
 
-		var addr = 'Flat 5 blabla BW4 FEE';
-		var tel = '4443337';
-		var url = 'http://www.google.com';
+			var venueTel = getProperty(venue.contact, 'formattedPhone');
+			var address = getProperty(venue.location, 'address');
+			var street = getProperty(venue.location, 'crossStreet');
+			var city = getProperty(venue.location, 'city');			
+			var postcode = getProperty(venue.location, 'postalCode');
+			var url = getProperty(venue, 'url');
 
-		$("#selectedRest").show();
-		$("#selectedRest").attr('data-venue-id', venueID);
-		$("#selectedRest").attr('data-name', name);
-		$("#selectedRest").attr('data-latlng', latlng);
-		$("#selectedRest").attr('data-addr', addr);
-		$("#selectedRest").attr('data-tel', tel);
-		$("#selectedRest").attr('data-url', url);
+			$("#selectedRest").show();
+			$("#selectedRest").attr('data-venue-id', venueID);
+			$("#selectedRest").attr('data-name', name);
+			$("#selectedRest").attr('data-latlng', latlng);
+			$("#selectedRest").attr('data-address', address);
+			$("#selectedRest").attr('data-street', street);
+			$("#selectedRest").attr('data-city', city);
+			$("#selectedRest").attr('data-postcode', postcode);
+			$("#selectedRest").attr('data-tel', venueTel);
+			$("#selectedRest").attr('data-url', url);
 
-		$("#selectedHead").text(name);
-		$("#selectedLatLng").text(latlng);
-		$("#address").text('Address: ' + addr);
-		$("#telephone").text('Telephone: ' + tel);
-		$("#url").text('URL: ' + url);
+			$("#selectedHead").text(name);
+			$("<dt>Title: </dt><dd>" + address + "</dd>").appendTo("#address");
+			$("<dt>Street: </dt><dd>" + street + "</dd>").appendTo("#address");
+			$("<dt>City: </dt><dd>" + city + "</dd>").appendTo("#address");
+			$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
+			$("<dt>Telephone: </dt><dd>" + venueTel + "</dd>").appendTo("#address");
+			$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+		});
+	}
+
+	function getProperty(object, property){
+		if (typeof object[property] === "undefined")
+		{
+			return "";
+		} else {
+			return object[property];
+		}
 	}
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
 		var latlng = $("#selectedRest").attr('data-latlng');
-		var addr = $("#selectedRest").attr('data-addr');
-		var tel = $("#selectedRest").attr('data-tel');
+		var address = $("#selectedRest").attr('data-address');
+		var street = $("#selectedRest").attr('data-street');
+		var city = $("#selectedRest").attr('data-city');
+		var postcode = $("#selectedRest").attr('data-postcode');
+		var venueTel = $("#selectedRest").attr('data-tel');
 		var url = $("#selectedRest").attr('data-url');
-		hoodie.store.add('venue', { name : name, coords : latlng, address: addr, telephone: tel, url: url })
+
+		hoodie.store.add('venue', { 
+			name : name, 
+			coords : latlng, 
+			address: address, 
+			street: street, 
+			city: city,
+			postcode: postcode,
+			tel: venueTel,
+			url: url
+		})
 		.done(function(){
 			alert('hello');
 		})

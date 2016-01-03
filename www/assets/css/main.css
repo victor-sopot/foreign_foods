@@ -145,17 +145,16 @@ body {
 
 #selectedRest {
   display: none;
-
   background-color: white;
   width: 80%;
   color: #91827A;
   padding: 20px 15px;
   margin: 0 auto;
   border: 4px solid #DE8154;
-  text-align: center;
 }
 
 #selectedHead {
+  text-align: center;
   font-size: 7.2rem;
   font-family: DinerFatt;
 }
@@ -176,6 +175,14 @@ body {
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 217, 102, .6) !important;
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(233, 217, 102, .6) !important;
+}
+
+#selectedRest ul {
+  list-style: none;
+}
+
+#selectedRest ul li {
+  margin-right: 20px;
 }
 
 label {
