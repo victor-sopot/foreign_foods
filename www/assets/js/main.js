@@ -105,17 +105,18 @@ $(document).ready(function(){
 
 	});
 
+	var markers = [];
+
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
-		
 		//Scroll down to map
+		clearMarkers();
 		$('html, body').animate({
         	scrollTop: $("#resultsPane").offset().top
     	}, 1200);
 
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
-
 		// Spinner
 		$("#loader1").toggle();
 
@@ -139,7 +140,7 @@ $(document).ready(function(){
 			var responseGeocode = response.response.geocode.feature.geometry.center;
 			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
 			map.panTo(geocode);
-			$.each(venues, function(key, venues ) {
+			$.each(venues, function(key, venues) {
 				var venueID = venues.id;
 				var name = venues.name;
 				var lat = venues.location.lat;
@@ -149,14 +150,27 @@ $(document).ready(function(){
 					position: latlng,
 					title: name
 				});
-				marker.setMap(map);
-
 				marker.addListener('click', function() {
 					bindInfoContainer(venueID, name, latlng);
 				})
+				markers.push(marker);
+				setMarkers(map);
 			});
 		});
 	});
+
+	function setMarkers(map) {
+		for (var i = 0; i<markers.length; i++) {
+			markers[i].setMap(map);
+		}
+	}
+
+	function clearMarkers() {
+		setMarkers(null);
+		markers = [];
+	}
+
+		
 
 	function bindInfoContainer(venueID, name, latlng) {
 		$("#loader2").toggle();
@@ -241,12 +255,24 @@ $(document).ready(function(){
 		})
 	})
 
+
+	$("#stores").on('click', function(){
+
+		console.log('hello');
+		hoodie.store.add('test', high);
+	})
+
 	// Init Google map
 	var map;
 	map = new google.maps.Map(document.getElementById("map"), {
 		center: {lat: 51.465839, lng: -2.587283},
 		zoom: 12
 	});
+
+
+
+
+	
 });
 
 

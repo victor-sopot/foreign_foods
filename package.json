@@ -1,5 +1,5 @@
 {
-  "name": "project",
+  "name": "foreign_foods",
   "version": "3.2.1",
   "bundleDependencies": [
     "hoodie-plugin-appconfig",
