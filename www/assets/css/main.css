@@ -225,6 +225,25 @@ label {
   color: #222;
 }
 
+#restaurantSide {
+  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+  border: 2px solid #C6B5AA;
+  padding: 20px;
+  background-color: white;
+  color: #8E6B43;
+}
+
+#restaurantSide ul {
+  list-style: none;
+}
+
+#restaurantSide ul li {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

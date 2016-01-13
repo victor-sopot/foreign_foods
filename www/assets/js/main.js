@@ -6,6 +6,19 @@ $(document).ready(function(){
 
 	// Check if there's a user logged in
 	checkuser();
+	findVenues();
+
+	function findVenues() {
+		hoodie.store.findAll('venue')
+		.done(function(allVenues) {
+			console.log(allVenues.length + ' venues found.');
+			console.log(allVenues);
+// LOOP THE VENUES //
+			$.each(allVenues, function(key, venues) {
+				$("#restaurants ul").append($('<li>' + allVenues.name + '</li>'));
+			})
+		});
+	}
 
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
@@ -229,6 +242,7 @@ $(document).ready(function(){
 			return object[property];
 		}
 	}
+		var count = 0;
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
@@ -251,25 +265,10 @@ $(document).ready(function(){
 			url: url
 		})
 		.done(function(){
-			alert('hello');
+			count++;
+			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
 		})
 	})
-
-
-	$("#stores").on('click', function(){
-
-		console.log('hello');
-		hoodie.store.add('test', high);
-	})
-
-	// Init Google map
-	var map;
-	map = new google.maps.Map(document.getElementById("map"), {
-		center: {lat: 51.465839, lng: -2.587283},
-		zoom: 12
-	});
-
-
 
 
 	
