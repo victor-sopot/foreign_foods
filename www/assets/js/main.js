@@ -13,12 +13,18 @@ $(document).ready(function(){
 		.done(function(allVenues) {
 			console.log(allVenues.length + ' venues found.');
 			console.log(allVenues);
-// LOOP THE VENUES //
-			$.each(allVenues, function(key, venues) {
-				$("#restaurants ul").append($('<li>' + allVenues.name + '</li>'));
+			// LOOP THE VENUES //
+			$.each(allVenues, function(key, allVenues) {
+				$("#restaurants ul").append($("<li class='list-group-item'><a id='venueMoreInfo'>" + allVenues.name + "</a></li>"));
 			})
 		});
 	}
+
+	$("#venueMoreInfo").on('click', function(){
+
+
+
+	})
 
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
@@ -114,8 +120,11 @@ $(document).ready(function(){
 		var cuisines = response.response.categories[3].categories;
 		$.each(cuisines, function(key, cuisines ) {
 			$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
+			hoodie.store.add("category", {
+				id : cuisines.id,
+				name : cuisines.shortName
+			});
 		});
-
 	});
 
 	var markers = [];

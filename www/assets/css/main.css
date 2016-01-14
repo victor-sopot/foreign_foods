@@ -97,7 +97,6 @@ body {
   padding: 50px 0;
   border: 3px solid #E78829;
   margin: auto;
-  width: 95%;
   background: url('../img/foods_pattern.png') 0px 0px;
 }
 
@@ -210,19 +209,25 @@ label {
   background-color: #DE8154 !important;
   padding: 15px;
 }
+
 .btn-account:focus,
 .btn-account.focus {
   color: white !important;
   background-color: #DEA795 !important;
 }
+
 .btn-account:hover {
   color: white !important;
   background-color: #DEA795 !important;
 }
 
-
 .btn-login {
   color: #222;
+}
+
+#restaurants a {
+  cursor: pointer;
+  color: #44918B;
 }
 
 #restaurantSide {
@@ -243,6 +248,8 @@ label {
   padding: 10px;
   margin-bottom: 20px;
 }
+
+
 
 /* ==========================================================================
    Helper classes
@@ -369,7 +376,7 @@ textarea[contenteditable] {
     /* Style adjustments for viewports that meet the condition */
 
   .pageTitle {
-    font-size: 15.0rem;
+    font-size: 12.0rem;
     text-shadow: 2px 2px 2px rgba(10,10,10,0.9);
   }
 
