@@ -300,17 +300,9 @@ $(document).ready(function(){
 
 
 	$("#stores").on('click', function(){
-
 		console.log('hello');
 		hoodie.store.add('test', high);
 	})
-
-	// Init Google map
-	var map;
-	map = new google.maps.Map(document.getElementById("map"), {
-		center: {lat: 51.465839, lng: -2.587283},
-		zoom: 12
-	});	
 });
 
 
