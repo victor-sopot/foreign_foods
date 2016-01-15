@@ -104,28 +104,47 @@ $(document).ready(function(){
 		alert(error);
 	}
 
+	if (categories === undefined || categories.length == 0) {
+		var categories = [];
+    	loadCategories();
+    } else {
+    	populateCategories();
+    }
+	
+    function loadCategories() {
+		// Load up the restaurant categories from the foursquare API. This should be run ONCE 
+		// on first running of the web app. 
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/categories',
+			data: {
+				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+				v: 20151230,
+				m: 'foursquare'
+			}
+		})
+		// Store them in an array, for use in the select box.
+		.done(function(response){ 
+			var cuisines = response.response.categories[3].categories;
+			var i = 0;
+			$.each(cuisines, function(key, cuisines ) {
+				var catID = cuisines.id;
+				var catShortName = cuisines.shortName;
+				var catFullName = cuisines.name;
+				var catIcon = cuisines.icon;
 
-	// Load up the restaurant categories from the foursquare API
-	$.ajax({
-		url: 'https://api.foursquare.com/v2/venues/categories',
-		data: {
-			client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
-			client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
-			v: 20151230,
-			m: 'foursquare'
-		}
-	})
-	// Place them in the select box
-	.done(function(response){
-		var cuisines = response.response.categories[3].categories;
-		$.each(cuisines, function(key, cuisines ) {
-			$("#cuisineInput").append($("<option value='" + cuisines.id + "'>" + cuisines.shortName + "</option>"));
-			hoodie.store.add("category", {
-				id : cuisines.id,
-				name : cuisines.shortName
+				categories[i++] = {id : catID, fullname : catFullName, name : catShortName, icon : catIcon};			
 			});
+			populateCategories();
 		});
-	});
+	}
+
+	function populateCategories() {
+		console.log(categories);
+		$.each(categories, function(key, categories){
+			$("#cuisineInput").append($("<option value='" + categories.id + "'>" + categories.name + "</option>"));
+		});
+	}
 
 	var markers = [];
 
@@ -251,7 +270,6 @@ $(document).ready(function(){
 			return object[property];
 		}
 	}
-		var count = 0;
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
@@ -274,13 +292,23 @@ $(document).ready(function(){
 			url: url
 		})
 		.done(function(){
-			count++;
-			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
+			alert('hello');
 		})
 	})
 
 
-	
+	$("#stores").on('click', function(){
+
+		console.log('hello');
+		hoodie.store.add('test', high);
+	})
+
+	// Init Google map
+	var map;
+	map = new google.maps.Map(document.getElementById("map"), {
+		center: {lat: 51.465839, lng: -2.587283},
+		zoom: 12
+	});	
 });
 
 
