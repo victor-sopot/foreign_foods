@@ -6,6 +6,7 @@ $(document).ready(function(){
 
 	// Check if there's a user logged in
 	checkuser();
+<<<<<<< HEAD
 	findVenues();
 
 	function findVenues() {
@@ -19,6 +20,8 @@ $(document).ready(function(){
 			})
 		});
 	}
+=======
+>>>>>>> parent of e3cc027... My Restaurants page
 
 	$("#venueMoreInfo").on('click', function(){
 
@@ -251,7 +254,6 @@ $(document).ready(function(){
 			return object[property];
 		}
 	}
-		var count = 0;
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
@@ -274,10 +276,25 @@ $(document).ready(function(){
 			url: url
 		})
 		.done(function(){
-			count++;
-			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
+			alert('hello');
 		})
 	})
+
+
+	$("#stores").on('click', function(){
+
+		console.log('hello');
+		hoodie.store.add('test', high);
+	})
+
+	// Init Google map
+	var map;
+	map = new google.maps.Map(document.getElementById("map"), {
+		center: {lat: 51.465839, lng: -2.587283},
+		zoom: 12
+	});
+
+
 
 
 	
