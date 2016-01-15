@@ -270,7 +270,8 @@ $(document).ready(function(){
 			return object[property];
 		}
 	}
-
+	
+	var count = 0;
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
 		var latlng = $("#selectedRest").attr('data-latlng');
@@ -292,7 +293,8 @@ $(document).ready(function(){
 			url: url
 		})
 		.done(function(){
-			alert('hello');
+			count++;
+			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
 		})
 	})
 
