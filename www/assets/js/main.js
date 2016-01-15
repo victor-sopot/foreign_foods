@@ -6,7 +6,6 @@ $(document).ready(function(){
 
 	// Check if there's a user logged in
 	checkuser();
-<<<<<<< HEAD
 	findVenues();
 
 	function findVenues() {
@@ -20,8 +19,6 @@ $(document).ready(function(){
 			})
 		});
 	}
-=======
->>>>>>> parent of e3cc027... My Restaurants page
 
 	$("#venueMoreInfo").on('click', function(){
 
@@ -292,12 +289,7 @@ $(document).ready(function(){
 	map = new google.maps.Map(document.getElementById("map"), {
 		center: {lat: 51.465839, lng: -2.587283},
 		zoom: 12
-	});
-
-
-
-
-	
+	});	
 });
 
 
