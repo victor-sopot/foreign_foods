@@ -9,22 +9,38 @@ $(document).ready(function(){
 	findVenues();
 
 	function findVenues() {
+		var id;
 		hoodie.store.findAll('venue')
 		.done(function(allVenues) {
 			console.log(allVenues.length + ' venues found.');
 			console.log(allVenues);
 			// LOOP THE VENUES //
 			$.each(allVenues, function(key, allVenues) {
-				$("#restaurants ul").append($("<li class='list-group-item'><a id='venueMoreInfo'>" + allVenues.name + "</a></li>"));
+				$("#restaurants ul").append($("<li data-id='"+ allVenues.id +"' data-name='"+ allVenues.name +"' data-address='"+ allVenues.address +"' data-street='"+ allVenues.street +"' data-city='"+ allVenues.city +"' data-postcode='"+ allVenues.postcode +"' data-tel='"+ allVenues.tel +"' data-url='"+ allVenues.url +"' class='list-group-item'>" + allVenues.name + "</li>"));
+			})
+			$("#restaurants li").on('click', function(event){
+				event.preventDefault();
+				$("#rest_title").text($(this).attr('data-name'));
+				$("#info").text($(this).attr('data-address'));
+
+				$(this).attr('data-selected', 'true');
+				id = $(this).attr('data-id');
+			})
+
+			$("#deleteVenue").on('click', function(event){
+				event.preventDefault();
+			    if (confirm("Are you sure?") == true) {
+		        	hoodie.store.remove('venue', id)
+		        	.done(function(removedVenue) {
+		        		alert(removedVenue + 'has been removed from your account.')
+		        	})
+		        	.fail(function(error) {
+		        		alert(error)
+		        	});
+    			}
 			})
 		});
 	}
-
-	$("#venueMoreInfo").on('click', function(){
-
-
-
-	})
 
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
@@ -140,7 +156,7 @@ $(document).ready(function(){
 	}
 
 	function populateCategories() {
-		console.log(categories);
+		// console.log(categories);
 		$.each(categories, function(key, categories){
 			$("#cuisineInput").append($("<option value='" + categories.id + "'>" + categories.name + "</option>"));
 		});

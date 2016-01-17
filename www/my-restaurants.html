@@ -93,17 +93,20 @@
             </div>
         </div>
 
-        <div class="row">
+        <div id="mainRestaurantWrap" class="row">
             <div class="col-md-6 col-sm-8">
-                <div id="restaurants"><ul class="list-group"></ul></div>
+                <div id="restaurants"><ul class="list-group">
+                </ul></div>
             </div>
             <div class="col-md-6 col-sm-4">
                 <aside id="restaurantSide">
-                    <p>shit</p>
-                    <p>shit</p>
-                    <p>more shit</p>
+                    <div class="jumbotron" id="restaurantInfo">
+                        <h2 id="rest_title">< Select a restaurant on the left</h2>
+                        <p id="info"></p>
+                    </div>
+                    <button id="stores" type="button" class="btn btn-default">View on Map</button>
+                    <button id="deleteVenue" type="button" class="btn btn-default">Delete</button>
                 </aside>
-                <button id="stores" type="button" class="btn btn-default">Go!</button>
                 <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
             </div>
         </div>

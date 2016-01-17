@@ -225,9 +225,21 @@ label {
   color: #222;
 }
 
-#restaurants a {
+#mainRestaurantWrap {
+  font-size: 1.8rem;
+}
+
+#restaurants li {
   cursor: pointer;
   color: #44918B;
+}
+
+#restaurants li:hover {
+  color: #9EC4C1;
+}
+
+#restaurantSide {
+  text-align: center;
 }
 
 #restaurantSide {
