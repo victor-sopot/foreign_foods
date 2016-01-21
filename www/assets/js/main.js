@@ -5,7 +5,13 @@ var hoodie = new Hoodie();
 $(document).ready(function(){
 
 	// Check if there's a user logged in
-	checkuser();
+
+	if (hoodie.account.username)
+	{
+		logged_in(hoodie.account.username);
+	} else {
+		not_logged_in();
+	}
 	findVenues();
 
 	function findVenues() {
@@ -48,7 +54,7 @@ $(document).ready(function(){
 	  	var password  = $('#password').val();
 	  	hoodie.account.signIn(username, password)
 	    	.done(function (user) {
-	    		window.location = "/";
+	    		window.location = "index.html";
 	    	})
 	    	.fail(showErrorMessage);
 	});
@@ -65,54 +71,51 @@ $(document).ready(function(){
 	});
 
 	$("#logout").on('click', function(){
-		hoodie.account.signOut()
+		hoodie.account.signOut({ignoreLocalChanges: true})
   		.done(function (user) {
-  			window.location = "/";
+  			window.location = "index.html";
   		})
   		.fail(showErrorMessage);
 	});
 
-	function checkuser() {
-		if(hoodie.account.username){
+	function logged_in(username) {
+		//Hide the form after login/register
+		$("#loginPage").hide();
+		$("#signupPage").hide();
 
-			//Hide the form after login/register
-			$("#loginPage").hide();
-			$("#signupPage").hide();
+		//Show confirmation on login or signup
+		$("#userConf").show();
+		$("#userConf h2").text("Welcome, " + username + "! Redirecting...");
 
-			//Show confirmation on login or signup
-			$("#userConf").show();
-			$("#userConf h2").text("Welcome, " + hoodie.account.username + "! Redirecting...");
+		//Update navbar text
+		$("#currentUser").text("Signed In As " +  username);
 
-			//Update navbar text
-			$("#currentUser").text("Signed In As " + hoodie.account.username);
+		//Hide Register+Login buttons, show logout button if logged in
+		$("#register").hide();
+		$("#login").hide();
+		$("#logout").show();
 
-			//Hide Register+Login buttons, show logout button if logged in
-			$("#register").hide();
-			$("#login").hide();
-			$("#logout").show();
+		// $("#saveRestaurant").show();		
+	}
 
-			$("#saveRestaurant").show();			
+	function not_logged_in() {
+		//Show the form by default (not logged in)
+		$("#loginPage").show();
+		$("#signupPage").show();
 
-		} else {
-			
-			//Show the form by default (not logged in)
-			$("#loginPage").show();
-			$("#signupPage").show();
+		//Hide confirmation messages
+		$("#userConf").hide();
+		$("#userConf h2").text("");
 
-			//Hide confirmation messages
-			$("#userConf").hide();
-			$("#userConf h2").text("");
+		//Navbar text
+		$("#currentUser").text("Not Signed In");
 
-			//Navbar text
-			$("#currentUser").text("Not Signed In");
+		//Show Register+Login buttons if not signed in, hide logout button
+		$("#register").show();
+		$("#login").show();
+		$("#logout").hide();
 
-			//Show Register+Login buttons if not signed in, hide logout button
-			$("#register").show();
-			$("#login").show();
-			$("#logout").hide();
-
-			$("#saveRestaurant").hide();
-		}
+		// $("#saveRestaurant").hide();
 	}
 
 	function showErrorMessage(error) {
