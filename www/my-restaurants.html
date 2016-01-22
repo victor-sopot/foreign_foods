@@ -88,24 +88,24 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="page-header">
-                    <h1>Your Saved Restaurants</h1>
+                    <h2 class="panelTitle">Your Saved Restaurants</h2>
                 </div>
             </div>
         </div>
 
         <div id="mainRestaurantWrap" class="row">
             <div class="col-md-6 col-sm-8">
-                <div id="restaurants"><ul class="list-group">
+                <div id="restaurants"><span id="noVenues">Nothing here :(</span><ul id="savedVenues" class="list-group">
                 </ul></div>
             </div>
             <div class="col-md-6 col-sm-4">
-                <aside id="restaurantSide">
+                <aside class="panel" id="restaurantSide">
                     <div class="jumbotron" id="restaurantInfo">
-                        <h2 id="rest_title">< Select a restaurant on the left</h2>
+                        <h2 id="rest_title">< Select a venue</h2>
                         <p id="info"></p>
                     </div>
-                    <button id="stores" type="button" class="btn btn-default">View on Map</button>
-                    <button id="deleteVenue" type="button" class="btn btn-default">Delete</button>
+                    <button disabled="disabled" id="locateBtn" type="button" class="btn btn-default">View on Map</button>
+                    <button disabled="disabled" id="deleteVenue" type="button" class="btn btn-default">Delete</button>
                 </aside>
                 <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
             </div>

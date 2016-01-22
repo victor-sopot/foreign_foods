@@ -14,39 +14,16 @@ $(document).ready(function(){
 	}
 	findVenues();
 
-	function findVenues() {
-		var id;
-		hoodie.store.findAll('venue')
-		.done(function(allVenues) {
-			console.log(allVenues.length + ' venues found.');
-			console.log(allVenues);
-			// LOOP THE VENUES //
-			$.each(allVenues, function(key, allVenues) {
-				$("#restaurants ul").append($("<li data-id='"+ allVenues.id +"' data-name='"+ allVenues.name +"' data-address='"+ allVenues.address +"' data-street='"+ allVenues.street +"' data-city='"+ allVenues.city +"' data-postcode='"+ allVenues.postcode +"' data-tel='"+ allVenues.tel +"' data-url='"+ allVenues.url +"' class='list-group-item'>" + allVenues.name + "</li>"));
-			})
-			$("#restaurants li").on('click', function(event){
-				event.preventDefault();
-				$("#rest_title").text($(this).attr('data-name'));
-				$("#info").text($(this).attr('data-address'));
+	if (categories === undefined || categories.length == 0) {
+		var categories = [];
+    	loadCategories();
+    } else {
+    	populateCategories();
+    }
 
-				$(this).attr('data-selected', 'true');
-				id = $(this).attr('data-id');
-			})
+	var markers = [];
+	var count = 0;
 
-			$("#deleteVenue").on('click', function(event){
-				event.preventDefault();
-			    if (confirm("Are you sure?") == true) {
-		        	hoodie.store.remove('venue', id)
-		        	.done(function(removedVenue) {
-		        		alert(removedVenue + 'has been removed from your account.')
-		        	})
-		        	.fail(function(error) {
-		        		alert(error)
-		        	});
-    			}
-			})
-		});
-	}
 
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
@@ -77,95 +54,6 @@ $(document).ready(function(){
   		})
   		.fail(showErrorMessage);
 	});
-
-	function logged_in(username) {
-		//Hide the form after login/register
-		$("#loginPage").hide();
-		$("#signupPage").hide();
-
-		//Show confirmation on login or signup
-		$("#userConf").show();
-		$("#userConf h2").text("Welcome, " + username + "! Redirecting...");
-
-		//Update navbar text
-		$("#currentUser").text("Signed In As " +  username);
-
-		//Hide Register+Login buttons, show logout button if logged in
-		$("#register").hide();
-		$("#login").hide();
-		$("#logout").show();
-
-		// $("#saveRestaurant").show();		
-	}
-
-	function not_logged_in() {
-		//Show the form by default (not logged in)
-		$("#loginPage").show();
-		$("#signupPage").show();
-
-		//Hide confirmation messages
-		$("#userConf").hide();
-		$("#userConf h2").text("");
-
-		//Navbar text
-		$("#currentUser").text("Not Signed In");
-
-		//Show Register+Login buttons if not signed in, hide logout button
-		$("#register").show();
-		$("#login").show();
-		$("#logout").hide();
-
-		// $("#saveRestaurant").hide();
-	}
-
-	function showErrorMessage(error) {
-		console.log(error);
-		alert(error);
-	}
-
-	if (categories === undefined || categories.length == 0) {
-		var categories = [];
-    	loadCategories();
-    } else {
-    	populateCategories();
-    }
-	
-    function loadCategories() {
-		// Load up the restaurant categories from the foursquare API. This should be run ONCE 
-		// on first running of the web app. 
-		$.ajax({
-			url: 'https://api.foursquare.com/v2/venues/categories',
-			data: {
-				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
-				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
-				v: 20151230,
-				m: 'foursquare'
-			}
-		})
-		// Store them in an array, for use in the select box.
-		.done(function(response){ 
-			var cuisines = response.response.categories[3].categories;
-			var i = 0;
-			$.each(cuisines, function(key, cuisines ) {
-				var catID = cuisines.id;
-				var catShortName = cuisines.shortName;
-				var catFullName = cuisines.name;
-				var catIcon = cuisines.icon;
-
-				categories[i++] = {id : catID, fullname : catFullName, name : catShortName, icon : catIcon};			
-			});
-			populateCategories();
-		});
-	}
-
-	function populateCategories() {
-		// console.log(categories);
-		$.each(categories, function(key, categories){
-			$("#cuisineInput").append($("<option value='" + categories.id + "'>" + categories.name + "</option>"));
-		});
-	}
-
-	var markers = [];
 
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
@@ -211,13 +99,173 @@ $(document).ready(function(){
 					title: name
 				});
 				marker.addListener('click', function() {
-					bindInfoContainer(venueID, name, latlng);
+					venueDetails(venueID, name, latlng);
 				})
 				markers.push(marker);
 				setMarkers(map);
 			});
 		});
 	});
+
+	$("#saveRestaurant").on('click', function () {
+		var name = $("#selectedRest").attr('data-name');
+		var latlng = $("#selectedRest").attr('data-latlng');
+		var address = $("#selectedRest").attr('data-address');
+		var street = $("#selectedRest").attr('data-street');
+		var city = $("#selectedRest").attr('data-city');
+		var postcode = $("#selectedRest").attr('data-postcode');
+		var venueTel = $("#selectedRest").attr('data-tel');
+		var url = $("#selectedRest").attr('data-url');
+		var iconPrefix = $("#selectedRest").attr('data-i-prefix');
+		var iconSuffix = $("#selectedRest").attr('data-i-suffix');
+
+		hoodie.store.add('venue', { 
+			name : name, 
+			coords : latlng, 
+			address: address, 
+			street: street, 
+			city: city,
+			postcode: postcode,
+			tel: venueTel,
+			url: url,
+			iconp : iconPrefix,
+			icons : iconSuffix
+		})
+		.done(function(){
+			count++;
+			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
+		})
+	})
+
+
+	// View on Map
+	$("#locateBtn").on('click', function(){
+
+	})
+
+	function findVenues() {
+		hoodie.store.findAll('venue')
+		.done(function(allVenues) {
+			// LOOP THE VENUES //
+			if (allVenues.length == 0) {
+				console.log(allVenues.length + ' venues found.');
+				$("#restaurantSide button").attr("disabled", "disabled")
+				$("#noVenues").show();
+		    } else {
+		    	retreiveVenues(allVenues);
+		    }
+		});
+	}
+
+	function retreiveVenues(object)
+	{
+		var id;
+		$("#restaurantSide button").removeAttr("disabled");
+		$.each(object, function(key, object) {
+				$("#restaurants ul").append($("<li data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
+			})
+			$("#restaurants li").on('click', function(event){
+				event.preventDefault();
+				$("#rest_title").text($(this).attr('data-name'));
+				$("#info").text($(this).attr('data-address'));
+				$(this).attr('data-selected', 'true');
+				id = $(this).attr('data-id');
+			})
+
+			$("#deleteVenue").on('click', function(event){
+				event.preventDefault();
+			    if (confirm("Are you sure?") == true) {
+		        	hoodie.store.remove('venue', id)
+		        	.done(function(removedVenue) {
+		        		alert(removedVenue.name + ' has been removed from your account.')
+		        		window.location = "my-restaurants.html";
+		        	})
+		        	.fail(function(error) {
+		        		alert(error)
+		        	});
+    			}
+			})
+	}
+
+	function logged_in(username) {
+		//Hide the form after login/register
+		$("#loginPage").hide();
+		$("#signupPage").hide();
+
+		//Show confirmation on login or signup
+		$("#userConf").show();
+		$("#userConf h2").text("Welcome, " + username + "! Redirecting...");
+
+		//Update navbar text
+		$("#currentUser").text("Signed In As " +  username);
+
+		//Hide Register+Login buttons, show logout button if logged in
+		$("#register").hide();
+		$("#login").hide();
+		$("#logout").show();
+
+		// $("#saveRestaurant").show();		
+	}
+
+	function not_logged_in() {
+		//Show the form by default (not logged in)
+		$("#loginPage").show();
+		$("#signupPage").show();
+
+		//Hide confirmation messages
+		$("#userConf").hide();
+		$("#userConf h2").text("");
+
+		//Navbar text
+		$("#currentUser").text("Not Signed In");
+
+		//Show Register+Login buttons if not signed in, hide logout button
+		$("#register").show();
+		$("#login").show();
+		$("#logout").hide();
+
+		// $("#saveRestaurant").hide();
+	}
+
+	function showErrorMessage(error) {
+		console.log(error);
+		alert(error);
+	}
+	
+    function loadCategories() {
+		// Load up the restaurant categories from the foursquare API. This should be run ONCE 
+		// on first running of the web app. 
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/categories',
+			data: {
+				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+				v: 20151230,
+				m: 'foursquare'
+			}
+		})
+		// Store them in an array, for use in the select box.
+		.done(function(response){ 
+			var cuisines = response.response.categories[3].categories;
+			var i = 0;
+			$.each(cuisines, function(key, cuisines ) {
+				var catID = cuisines.id;
+				var catShortName = cuisines.shortName;
+				var catFullName = cuisines.name;
+				var catIcon = cuisines.icon;
+
+				categories[i++] = {id : catID, fullname : catFullName, name : catShortName, icon : catIcon};			
+			});
+			populateCategories();
+		});
+	}
+
+	function populateCategories() {
+		// console.log(categories);
+		$.each(categories, function(key, categories){
+			$("#cuisineInput").append($("<option value='" + categories.id + "'>" + categories.name + "</option>"));
+		});
+	}
 
 	function setMarkers(map) {
 		for (var i = 0; i<markers.length; i++) {
@@ -232,7 +280,7 @@ $(document).ready(function(){
 
 		
 
-	function bindInfoContainer(venueID, name, latlng) {
+	function venueDetails(venueID, name, latlng) {
 		$("#loader2").toggle();
 		$.ajax({
 			url: 'https://api.foursquare.com/v2/venues/' + venueID,
@@ -253,6 +301,8 @@ $(document).ready(function(){
 			var city = getProperty(venue.location, 'city');			
 			var postcode = getProperty(venue.location, 'postalCode');
 			var url = getProperty(venue, 'url');
+			var iconPrefix = getProperty(venue.categories[0].icon, 'prefix');
+			var iconSuffix = getProperty(venue.categories[0].icon, 'suffix');
 
 			$("#address").html("");
 
@@ -266,6 +316,8 @@ $(document).ready(function(){
 			$("#selectedRest").attr('data-postcode', postcode);
 			$("#selectedRest").attr('data-tel', venueTel);
 			$("#selectedRest").attr('data-url', url);
+			$("#selectedRest").attr('data-i-prefix', iconPrefix);
+			$("#selectedRest").attr('data-i-suffix', iconSuffix);
 
 			$("#selectedHead").text(name);
 			$("<dt>Title: </dt><dd>" + address + "</dd>").appendTo("#address");
@@ -290,38 +342,7 @@ $(document).ready(function(){
 		}
 	}
 	
-	var count = 0;
-	$("#saveRestaurant").on('click', function () {
-		var name = $("#selectedRest").attr('data-name');
-		var latlng = $("#selectedRest").attr('data-latlng');
-		var address = $("#selectedRest").attr('data-address');
-		var street = $("#selectedRest").attr('data-street');
-		var city = $("#selectedRest").attr('data-city');
-		var postcode = $("#selectedRest").attr('data-postcode');
-		var venueTel = $("#selectedRest").attr('data-tel');
-		var url = $("#selectedRest").attr('data-url');
-
-		hoodie.store.add('venue', { 
-			name : name, 
-			coords : latlng, 
-			address: address, 
-			street: street, 
-			city: city,
-			postcode: postcode,
-			tel: venueTel,
-			url: url
-		})
-		.done(function(){
-			count++;
-			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
-		})
-	})
-
-
-	$("#stores").on('click', function(){
-		console.log('hello');
-		hoodie.store.add('test', high);
-	})
+	
 });
 
 
