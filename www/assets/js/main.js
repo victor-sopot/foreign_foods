@@ -137,7 +137,6 @@ $(document).ready(function(){
 		})
 	})
 
-
 	// View on Map
 	$("#locateBtn").on('click', function(){
 
