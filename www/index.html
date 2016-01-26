@@ -93,21 +93,18 @@
                     <h2 class="panelTitle">Search for foreign foods in your area!</h2 class="panelTitle">
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
+        <form>
+            <div class="form-group">
                 <label for="locInput">Enter Location</label>
                 <input id="locInput" type="text" class="form-control">
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
+            <div class="form-group">
                 <label for="cuisineInput">Choose a cuisine</label>
                 <select id="cuisineInput" class="form-control">
                     <option> - Select Cuisine - </option>
-                </select>
+                </select>       
             </div>
-        </div>
+        </form>
 
         <div class="row center">
             <div class="col-md-12">
@@ -116,7 +113,7 @@
             </div>
         </div>
     </div>
-    <div class="container panel">
+    <div id="resultsWrap" class="container panel">
         <div class="row">
             <div class="col-md-12">
                 <h2 class="panelTitle">Results</h2>
