@@ -130,11 +130,11 @@ body {
 #venueSearch input, #venueSearch select {
   font-size: 1.9rem;
   text-align: center;
+  color: #259D8F;
 }
 
 #locInput {
   background-color: #B5DEDA;
-  color: white;
   border: none;
 
   -webkit-transition: background-color 0.2s;
@@ -145,6 +145,7 @@ body {
 
 #locInput:focus, #cuisineInput:focus {
   background-color: #259D8F;
+  color: white;
 }
 
 #cuisineInput {
