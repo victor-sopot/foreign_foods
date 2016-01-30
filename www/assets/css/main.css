@@ -20,7 +20,7 @@ textarea {
 }
 
 a {
-    color: #00e;
+    color: #44918B;
 }
 
 a:visited {
@@ -28,7 +28,7 @@ a:visited {
 }
 
 a:hover {
-    color: #06e;
+    color: #4FB0A9;
 }
 
 /*
@@ -125,6 +125,15 @@ body {
   font-size: 7.2rem;
   color: white;
   text-shadow: 1px 1px 0px black;
+}
+
+#mainboard {
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+#mainboard a {
+  color: #BF41BD;
 }
 
 #venueSearch input, #venueSearch select {
@@ -307,6 +316,14 @@ label {
   margin-bottom: 20px;
 }
 
+#info #meta {
+  font-size: 1.2rem;
+}
+
+#address, #street, #city, #postcode {
+  margin: 0;
+}
+
 .center {
   text-align: center;
 }
@@ -314,6 +331,7 @@ label {
 #noVenues {
   display: none;
 }
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */

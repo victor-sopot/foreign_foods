@@ -12,6 +12,8 @@ $(document).ready(function(){
 	} else {
 		not_logged_in();
 	}
+	
+	// Retrieve local venues
 	findVenues();
 
 	if (categories === undefined || categories.length == 0) {
@@ -139,7 +141,7 @@ $(document).ready(function(){
 
 	// View on Map
 	$("#locateBtn").on('click', function(){
-
+			//todo
 	})
 
 	function findVenues() {
@@ -148,7 +150,7 @@ $(document).ready(function(){
 			// LOOP THE VENUES //
 			if (allVenues.length == 0) {
 				console.log(allVenues.length + ' venues found.');
-				$("#restaurantSide button").attr("disabled", "disabled")
+				$("#restaurantSide button").attr("disabled", "disabled");
 				$("#noVenues").show();
 		    } else {
 		    	retreiveVenues(allVenues);
@@ -161,12 +163,20 @@ $(document).ready(function(){
 		var id;
 		$("#restaurantSide button").removeAttr("disabled");
 		$.each(object, function(key, object) {
-				$("#restaurants ul").append($("<li data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
+				$("#restaurants ul").append($("<li data-created='"+ object.createdAt + "' data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
 			})
 			$("#restaurants li").on('click', function(event){
 				event.preventDefault();
+				$("#info #meta").text('Added At: 4:54pm 21st January 2016 by Muhammad Ali');
+
 				$("#rest_title").text($(this).attr('data-name'));
-				$("#info").text($(this).attr('data-address'));
+				$("#info #address").html("<span class='glyphicon glyphicon-bookmark'></span> " + $(this).attr('data-address'));
+				$("#info #street").text($(this).attr('data-street'));
+				$("#info #city").text($(this).attr('data-city'));
+				$("#info #postcode").text($(this).attr('data-postcode'));
+				$("#info #tel").html("<span class='glyphicon glyphicon-earphone'></span> " + $(this).attr('data-tel'));
+				$("#info #url").html("<a href='" + $(this).attr('data-url') + "' _target='blank'>" + $(this).attr('data-url') + "</a>");
+
 				$(this).attr('data-selected', 'true');
 				id = $(this).attr('data-id');
 			})
@@ -203,7 +213,8 @@ $(document).ready(function(){
 		$("#login").hide();
 		$("#logout").show();
 
-		// $("#saveRestaurant").show();		
+		//Hide not-logged-in message on my-restaurants.html
+		$("#mainboard").hide();
 	}
 
 	function not_logged_in() {
@@ -223,7 +234,8 @@ $(document).ready(function(){
 		$("#login").show();
 		$("#logout").hide();
 
-		// $("#saveRestaurant").hide();
+		//Display not-logged-in message on my-restaurants.html
+		$("#mainboard").show();
 	}
 
 	function showErrorMessage(error) {
