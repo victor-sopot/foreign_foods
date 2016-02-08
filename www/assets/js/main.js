@@ -1,6 +1,6 @@
 "use strict";
 //Init hoodie
-var hoodie = new Hoodie();
+var hoodie = new Appback('https://foreign-foods.appback.com/');
 
 $(document).ready(function(){
 
