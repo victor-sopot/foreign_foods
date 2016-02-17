@@ -59,11 +59,7 @@ $(document).ready(function(){
 
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
-		//Scroll down to map
-		clearMarkers();
-		$('html, body').animate({
-        	scrollTop: $("#resultsPane").offset().top
-    	}, 1200);
+		
 
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
@@ -81,11 +77,28 @@ $(document).ready(function(){
 				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
 				v: 20151230,
 				m: 'foursquare'
+			},
+			statusCode: {
+				400: function() {
+					alert("Bad request fix it up"); //HI THERE
+				}
 			}
 		})
 		// Plot them on Google Map
 		.done(function(response){
+			
+			// Hide the loader spinner
 			$("#loader1").toggle();
+
+			// Once the reqeust has returned, clear the existing markers
+			clearMarkers();
+
+			//Scroll down to map
+			$('html, body').animate({
+	        	scrollTop: $("#resultsPane").offset().top
+	    	}, 1200);
+
+			// Grab Fourequare response data assuming it's a good request.
 			var venues = response.response.venues;
 			var responseGeocode = response.response.geocode.feature.geometry.center;
 			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
@@ -352,8 +365,6 @@ $(document).ready(function(){
 			return object[property];
 		}
 	}
-	
-	
 });
 
 
