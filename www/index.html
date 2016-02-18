@@ -90,7 +90,10 @@
     <div id="mainboard" class="container">
         <div class="row">
             <div class="col-md-12">
-                <p class="bg-warning">Not logged in. The venues you save now will be stored locally until you <a href="register.html">Register</a> or <a href="login.html">Login</a>.</p>
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Hey Rambo! </strong><a href="login.html" class="alert-link">Better log in</a>, or your venues will only be stored on this computer. You could also <a href="register.html" class="alert-link">create an account</a>
+                </div>
             </div>
         </div>
     </div>
@@ -117,6 +120,15 @@
             <div class="col-md-12">
                 <button id="search" type="button" class="btn btn-default">Go!</button>
                 <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
+            </div>
+        </div>
+
+        <div class="row center" id="errorResponse">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <p id="errorText"></p>
+                    <button class="button-primary">Try again</button>
+                </div>
             </div>
         </div>
     </div>

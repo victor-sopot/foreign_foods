@@ -80,7 +80,27 @@ $(document).ready(function(){
 			},
 			statusCode: {
 				400: function() {
-					alert("Bad request fix it up"); //HI THERE
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+					$('#errorText').text('Freeze motherfucker');
+				},
+				401: function() {
+					$('#errorText').text('Hello');
+				},
+				403: function() {
+					$('#errorText').text('Hello');
+				},
+				404: function() {
+					$('#errorText').text('Hello');
+				},
+				405: function() {
+					$('#errorText').text('Hello');
+				},
+				409: function() {
+					$('#errorText').text('Hello');
+				},
+				500: function() {
+					$('#errorText').text('Hello');
 				}
 			}
 		})
