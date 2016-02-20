@@ -1,6 +1,7 @@
 "use strict";
 //Init hoodie
-var hoodie = new Appback('https://foreign-foods.appback.com/');
+//var hoodie = new Appback('https://foreign-foods.appback.com/');
+var hoodie = new hoodie();
 
 $(document).ready(function(){
 
@@ -25,7 +26,6 @@ $(document).ready(function(){
 
 	var markers = [];
 	var count = 0;
-
 
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
@@ -59,11 +59,7 @@ $(document).ready(function(){
 
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
-		//Scroll down to map
-		clearMarkers();
-		$('html, body').animate({
-        	scrollTop: $("#resultsPane").offset().top
-    	}, 1200);
+		
 
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
@@ -81,11 +77,49 @@ $(document).ready(function(){
 				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
 				v: 20151230,
 				m: 'foursquare'
+			},
+			statusCode: {
+				400: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				401: function() {
+					$('#errorText').text('Hello');
+				},
+				403: function() {
+					$('#errorText').text('Hello');
+				},
+				404: function() {
+					$('#errorText').text('Hello');
+				},
+				405: function() {
+					$('#errorText').text('Hello');
+				},
+				409: function() {
+					$('#errorText').text('Hello');
+				},
+				500: function() {
+					$('#errorText').text('Hello');
+				}
 			}
 		})
 		// Plot them on Google Map
 		.done(function(response){
+			
+			// Hide the loader spinner
 			$("#loader1").toggle();
+			// Hide the error window
+			$("#errorResponse").hide();
+
+			// Once the reqeust has returned, clear the existing markers
+			clearMarkers();
+
+			//Scroll down to map
+			$('html, body').animate({
+	        	scrollTop: $("#resultsPane").offset().top
+	    	}, 1200);
+
+			// Grab Fourequare response data assuming it's a good request.
 			var venues = response.response.venues;
 			var responseGeocode = response.response.geocode.feature.geometry.center;
 			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
@@ -106,8 +140,19 @@ $(document).ready(function(){
 				markers.push(marker);
 				setMarkers(map);
 			});
-		});
+		})
+		.fail(function(response){
+			if (response.responseJSON.meta.errorType == 'failed_geocode') {
+				$("#errorText").html('<strong>Uhoh! Couldn\'t find that location.</strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>')
+			} else if (response.responseJSON.meta.errorType == 'param_error') {
+				$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
+			}
+		})
 	});
+
+	$("#tryagain").on('click', function() {
+		$("#locInput").focus();
+	})
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
@@ -352,8 +397,6 @@ $(document).ready(function(){
 			return object[property];
 		}
 	}
-	
-	
 });
 
 
