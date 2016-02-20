@@ -83,22 +83,28 @@ $(document).ready(function(){
 					$('#errorResponse').show();
 				},
 				401: function() {
-					$('#errorText').text('Hello');
+					$("#loader1").toggle();
+					$('#errorResponse').show();
 				},
 				403: function() {
-					$('#errorText').text('Hello');
+					$("#loader1").toggle();
+					$('#errorResponse').show();
 				},
 				404: function() {
-					$('#errorText').text('Hello');
+					$("#loader1").toggle();
+					$('#errorResponse').show();
 				},
 				405: function() {
-					$('#errorText').text('Hello');
+					$("#loader1").toggle();
+					$('#errorResponse').show();
 				},
 				409: function() {
-					$('#errorText').text('Hello');
+					$("#loader1").toggle();
+					$('#errorResponse').show();
 				},
 				500: function() {
-					$('#errorText').text('Hello');
+					$("#loader1").toggle();
+					$('#errorResponse').show();
 				}
 			}
 		})
