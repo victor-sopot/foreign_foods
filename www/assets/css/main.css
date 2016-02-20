@@ -461,7 +461,7 @@ textarea[contenteditable] {
     /* Style adjustments for viewports that meet the condition */
 
   .pageTitle {
-    font-size: 12.0rem;
+    font-size: 8.0rem;
     text-shadow: 2px 2px 2px rgba(10,10,10,0.9);
   }
 
@@ -493,20 +493,20 @@ textarea[contenteditable] {
   margin-right: auto;
 }
 
-  .btn-login {
-    color: white !important;
-    background-color: #44918B !important;
-    padding: 15px;
-  }
+.btn-login {
+  color: white !important;
+  background-color: #44918B !important;
+  padding: 15px;
+}
 
-  .btn-login:focus,
-  .btn-login.focus {
-    color: white !important;
-    background-color: #86B0A2 !important;
-  }
+.btn-login:focus,
+.btn-login.focus {
+  color: white !important;
+  background-color: #86B0A2 !important;
+}
 
-  .btn-login:hover {
-    color: white !important;
-    background-color: #86B0A2 !important;
-  }
+.btn-login:hover {
+  color: white !important;
+  background-color: #86B0A2 !important;
+}
 }
