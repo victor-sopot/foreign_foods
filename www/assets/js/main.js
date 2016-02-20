@@ -26,7 +26,6 @@ $(document).ready(function(){
 	var markers = [];
 	var count = 0;
 
-
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
 		var username  = $('#username').val();
@@ -82,7 +81,6 @@ $(document).ready(function(){
 				400: function() {
 					$("#loader1").toggle();
 					$('#errorResponse').show();
-					$('#errorText').text('Freeze motherfucker');
 				},
 				401: function() {
 					$('#errorText').text('Hello');
@@ -109,6 +107,8 @@ $(document).ready(function(){
 			
 			// Hide the loader spinner
 			$("#loader1").toggle();
+			// Hide the error window
+			$("#errorResponse").hide();
 
 			// Once the reqeust has returned, clear the existing markers
 			clearMarkers();
@@ -139,8 +139,19 @@ $(document).ready(function(){
 				markers.push(marker);
 				setMarkers(map);
 			});
-		});
+		})
+		.fail(function(response){
+			if (response.responseJSON.meta.errorType == 'failed_geocode') {
+				$("#errorText").html('<strong>Uhoh! Couldn\'t find that location.</strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>')
+			} else if (response.responseJSON.meta.errorType == 'param_error') {
+				$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
+			}
+		})
 	});
+
+	$("#tryagain").on('click', function() {
+		$("#locInput").focus();
+	})
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
