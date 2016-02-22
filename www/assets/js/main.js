@@ -61,6 +61,7 @@ $(document).ready(function(){
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
 
+		// Error checking 
 		if (category == "Select Cuisine") {
 			$('#errorResponse').show();
 			$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong>');
@@ -296,7 +297,9 @@ $(document).ready(function(){
 
 	function showErrorMessage(error) {
 		console.log(error);
-		alert(error);
+		$("#errorResponse").show();
+		$("#errorResponse #errorText").html('<strong>Error logging in: </strong>' + error.message);
+		//alert(error);
 	}
 	
     function loadCategories() {
