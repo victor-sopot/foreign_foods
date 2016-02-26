@@ -89,8 +89,13 @@ textarea {
   url('../fonts/Daniel-Black-webfont.svg#webfont') format('svg');
 }
 
+@font-face {
+  font-family: OpenSansCondensed;
+  src: url('../fonts/OpenSans-CondLight.ttf') format('truetype');
+}
+
 body {
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: OpenSansCondensed, sans-serif;
   background-color: rgba(181, 222, 218, 0.45);
 }
 
