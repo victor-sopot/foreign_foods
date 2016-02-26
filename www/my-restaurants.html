@@ -96,40 +96,65 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="page-header">
-                    <h2 class="panelTitle">Your Saved Restaurants</h2>
+        <div class="container panel">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h2 class="panelTitle">Your Saved Restaurants</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="introductory">
+                        <p>Select a restaurant to check out its details. </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Find a use for this -->
+                </div>
+            </div>
+
+            <div id="mainRestaurantWrap" class="row">
+                <div class="col-md-6">
+                    <div id="restaurants"><span id="noVenues">No saved venues :(</span><ul id="savedVenues" class="list-group">
+                    </ul></div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <!-- Nav tabs -->
+                        <ul id="venueTabs" class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#details" aria-controls="home" role="tab" data-toggle="tab">Details</a></li>
+                            <li role="presentation"><a href="#map" aria-controls="profile" role="tab" data-toggle="tab">Map</a></li>
+                        </ul>
+
+                  <!-- Tab panes -->
+                      <div class="tab-content" id="restaurantSide">
+                        <div role="tabpanel" class="tab-pane fade in active" id="details">
+                            <div class="jumbotron" id="restaurantInfo">
+                                <h1 id="rest_title"></h1>
+                                <div id="info">
+                                    <p id ="meta"></p>
+                                    <p id="address"></p>
+                                    <p id="street"></p>
+                                    <p id="city"></p>
+                                    <p id="postcode"></p>
+                                    <p id="tel"></p>
+                                    <p id="url"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="map">
+                            <img src="http://placehold.it/350x200" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div id="mainRestaurantWrap" class="row">
-            <div class="col-md-6">
-                <div id="restaurants"><span id="noVenues">No saved venues :(</span><ul id="savedVenues" class="list-group">
-                </ul></div>
-            </div>
-            <div class="col-md-6">
-                <aside class="panel" id="restaurantSide">
-                    <div class="jumbotron" id="restaurantInfo">
-                        <h1 id="rest_title">< Select a venue</h1>
-                        <div id="info">
-                            <p id ="meta"></p>
-                            <p id="address"></p>
-                            <p id="street"></p>
-                            <p id="city"></p>
-                            <p id="postcode"></p>
-                            <p id="tel"></p>
-                            <p id="url"></p>
-                        </div>
-                    </div>
-                    <button disabled="disabled" id="locateBtn" type="button" class="btn btn-default">View on Map</button>
-                    <button disabled="disabled" id="deleteVenue" type="button" class="btn btn-default">Delete</button>
-                </aside>
-                <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
-            </div>
-        </div>
     </div>
+
+
 
         <!-- Add your site or application content here -->
         <script src="assets/vendor/jquery-2.1.0.min.js"></script>

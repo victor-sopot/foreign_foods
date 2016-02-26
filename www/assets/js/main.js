@@ -26,6 +26,11 @@ $(document).ready(function(){
 	var markers = [];
 	var count = 0;
 
+	$('#venueTabs a').click(function (e) {
+		e.preventDefault()
+		$(this).tab('show')
+	});
+
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
 		var username  = $('#username').val();
