@@ -61,7 +61,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 @font-face {
-  font-family: Diner;
+  font-family: DinerObese;
   src: url('../fonts/Diner-Obese-webfont.ttf') format('truetype'),
   url('../fonts/Diner-Obese-webfont.svg#webfont') format('svg');
 }
@@ -70,6 +70,12 @@ textarea {
   font-family: DinerFatt;
   src: url('../fonts/Diner-Fatt-webfont.ttf') format('truetype'),
   url('../fonts/Diner-Fatt-webfont.svg#webfont') format('svg');
+}
+
+@font-face {
+  font-family: Bebas;
+  src: url('../fonts/bebas-webfont.ttf') format('truetype'),
+  url('../fonts/bebas-webfont.svg#webfont') format('svg');
 }
 
 @font-face {
@@ -111,25 +117,23 @@ body {
 }
 
 #banner {
-  padding: 15px 0;
-  border: 3px solid black;
+  padding: 30px 0;
   margin: auto;
-  background: url('../img/foods_pattern.png') 0px 0px;
+  background-color: #FAF6C8;
 }
 
 .panelTitle {
   font-family: Kaushan;
   text-align: center;
   font-size: 4.2rem;
-  color: #44918B;
+  color: #CD2634; /* Hot rod red */
 }
 
 .pageTitle {
-  font-family: Diner;
+  font-family: DinerFatt;
   text-align: center;
   font-size: 7.2rem;
-  color: white;
-  text-shadow: 1px 1px 0px black;
+  color: #CD2634; /* Hot rod red */
 }
 
 #mainboard {
@@ -345,6 +349,29 @@ label {
   display: none;
 }
 
+/* New nav styles - these are overriding Bootstrap css styles */
+.navbar-default {
+  background-color: #CD2634;
+}
+
+.navbar-default, .navbar-default a, .navbar-default li {
+  
+  font-family: Bebas;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #CD2634 !important;
+  background-color: white;
+}
+
+.navbar-default .navbar-link {
+  color: white;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -471,8 +498,10 @@ textarea[contenteditable] {
 
   .pageTitle {
     font-size: 8.0rem;
-    text-shadow: 2px 2px 2px rgba(10,10,10,0.9);
+    transform: rotate(-4deg);
   }
+
+
 
   #savedVenues {
     white-space: normal;
@@ -504,7 +533,6 @@ textarea[contenteditable] {
 
 .btn-login {
   color: white !important;
-  background-color: #44918B !important;
   padding: 15px;
 }
 
