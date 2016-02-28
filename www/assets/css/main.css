@@ -377,6 +377,10 @@ label {
   color: white;
 }
 
+.navbar-default .navbar-brand {
+  color: white;
+}
+
 .navbar-text a:hover, .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
   color: #CD2634 !important;
   background-color: white !important;
