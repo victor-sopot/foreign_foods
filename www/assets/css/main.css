@@ -20,7 +20,7 @@ textarea {
 }
 
 a {
-    color: #44918B;
+    color: #CD2634;
 }
 
 a:visited {
@@ -103,6 +103,17 @@ textarea {
 body {
   font-family: OpenSansCondensed, sans-serif;
   background-color: rgb(255,255,255);
+
+  padding-top: 50px;
+}
+
+#headwrap {
+width: 100%;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#faf6c8+0,7db9e8+100&1+0,0+100 */
+background: -moz-linear-gradient(top,  rgba(250,246,200,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(250,246,200,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(250,246,200,1) 0%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf6c8', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
 }
 
 .row {
@@ -115,10 +126,19 @@ body {
 
 }
 
+#titleheader {
+  width: 76%;
+  margin: auto;
+  margin-bottom: 0;
+}
+
+#shelterheader {
+  text-align: center;
+}
+
 #banner {
   padding: 30px 0;
   margin: auto;
-  background-color: #FAF6C8;
 }
 
 .panelTitle {
@@ -163,17 +183,11 @@ input[type=text], #venueSearch select {
 }
 
 #resultsPane {
-  background-color: #44918B;
+  background-color: #CD2634;
   width: 100%;
   height: 600px;
   color: white;
   padding: 20px;
-}
-
-#stickyRoof {
-  z-index: 2;
-  width: 100%;
-  text-align: center;
 }
 
 #map {
@@ -343,23 +357,42 @@ label {
 
 .navbar-default {
   background-color: #CD2634;
+  border: none;
+  -webkit-box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.34) !important;
+  -moz-box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.34) !important;
+  box-shadow: 0px 3px 10px -2px rgba(0,0,0,0.34) !important;
 }
 
-.navbar-default, .navbar-default a, .navbar-default li {
+#useractions {
+  position: relative;
+  background-color: white !important;
+}
+
+.navbar-default, .navbar-default a, .navbar-default li, .navbar-text {
   font-family: Bebas;
+  color: white;
 }
 
 .navbar-default .navbar-nav > li > a {
   color: white;
 }
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+.navbar-text a:hover, .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
   color: #CD2634 !important;
-  background-color: white;
+  background-color: white !important;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  background-color: white !important;
+  color: #CD2634 !important;
 }
 
 .navbar-default .navbar-link {
   color: white;
+}
+
+#currentUser:hover {
+  color: white !important;
 }
 
 /* ==========================================================================
@@ -487,17 +520,15 @@ textarea[contenteditable] {
     /* Style adjustments for viewports that meet the condition */
 
   .pageTitle {
-    font-size: 8.0rem;
+    font-size: 10.0rem;
     transform: rotate(-4deg);
   }
-
-
 
   #savedVenues {
     white-space: normal;
     overflow-y: initial;
     overflow-x: initial;
-}
+  }
 
   .inner {
     display: block;
@@ -507,25 +538,19 @@ textarea[contenteditable] {
 
 @media only screen and (min-width: 768px) {
 
-.form-group {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-}
+  .form-group {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.btn-login {
-  color: white !important;
-  padding: 15px;
-}
+  .navbar-text a {
+    color: white !important;
+    padding: 15px;
+  }
 
-.btn-login:focus,
-.btn-login.focus {
-  color: white !important;
-  background-color: #86B0A2 !important;
-}
-
-.btn-login:hover {
-  color: white !important;
-  background-color: #86B0A2 !important;
-}
+  .navbar-text a:focus {
+    color: white !important;
+    background-color: white !important;
+  }
 }

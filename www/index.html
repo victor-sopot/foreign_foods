@@ -48,9 +48,9 @@
         <script src="assets/vendor/modernizr-2.7.1.min.js"></script>
     </head>
     <body>
-
+    <div id="headwrap">
     <div class="container">
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -65,19 +65,21 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="../">Home <span class="sr-only">(current)</span></a></li>
-                <li><a href="my-restaurants.html">My Restaurants</a></li>
-              </ul>
-              <p class="navbar-text navbar-right"><a class="btn-account" id="logout" href="login.html">Logout</a></p>
-              <p class="navbar-text navbar-right"><a class="btn-login" id="login" href="login.html">Login</a></p>
-              <p class="navbar-text navbar-right"><a class="btn-register" id="register" href="register.html">Register</a></p>
-              <p class="navbar-text navbar-right"><span id="currentUser" class="navbar-link"></span></p>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="../">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="my-restaurants.html">My Restaurants</a></li>
+                    </ul>
+                <div id="useractions">
+                    <p class="navbar-text navbar-right"><a class="btn-account" id="logout" href="login.html">Logout</a></p>
+                    <p class="navbar-text navbar-right"><a class="btn-login" id="login" href="login.html">Login</a></p>
+                    <p class="navbar-text navbar-right"><a class="btn-register" id="register" href="register.html">Register</a></p>
+                    <p class="navbar-text navbar-right"><span id="currentUser" class="navbar-link"></span></p>
+                </div> <!-- /#useractions -->
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
 
-        <div class="row">
+        <div class="row" id="titleheader">
             <div class="col-md-12">
                 <div id="banner">
                     <h1 class="pageTitle">Foreign Foods</h1>
@@ -85,6 +87,13 @@
             </div>
         </div>
     </div>
+    </div>
+    <div class="container" id="shelterheader">
+        <div class="row">
+            <img src="assets/img/banner.png" alt="">
+        </div>
+    </div>
+
     <div id="mainboard" class="container">
         <div class="row">
             <div class="col-md-12">
@@ -93,11 +102,6 @@
                     <strong>Hey Rambo! </strong><a href="login.html" class="alert-link">Better log in</a>, or your venues will only be stored on this computer. You could also <a href="register.html" class="alert-link">create an account</a>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <img src="assets/img/banner.png" alt="">
         </div>
     </div>
 
@@ -110,7 +114,7 @@
         <form>
             <div class="form-group">
                 <label for="locInput">Enter Location</label>
-                <input autofocus id="locInput" type="text" class="form-control input-lg">
+                <input id="locInput" type="text" class="form-control input-lg">
             </div>
             <div class="form-group">
                 <label for="cuisineInput">Choose a cuisine</label>
