@@ -111,7 +111,6 @@ body {
 
 .panel {
   background-color: white;
-  border: 1px solid #44918B;
   margin-bottom: 50px;
 
 }
@@ -145,41 +144,22 @@ body {
   color: #BF41BD;
 }
 
-#venueSearch input, #venueSearch select {
-  font-size: 1.9rem;
-  text-align: center;
-  color: #259D8F;
-}
-
-#locInput {
-  background-color: #B5DEDA;
-  border: none;
-
-  -webkit-transition: background-color 0.2s;
-  transition: background-color 0.2s;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-
-#locInput:focus, #cuisineInput:focus {
-  background-color: #259D8F;
-  color: white;
-}
-
-#cuisineInput {
-  background-color: #B5DEDA;
-  color: white;
-  border: none;
-  padding-left: 10px;
+input[type=text], #venueSearch select {
+  color: #CD2634;
+  border: 1px solid #CD2634;
+  border-radius: 3px;
 }
 
 #search {
-  background-color: #DE8154;
+  background-color: #CD2634;
   color: white;
-  font-family: DanielBlack;
+  font-family: Bebas, sans-serif;
   height: 50px;
   width: 100px;
   margin: 0 auto;
+
+  border-radius: 0;
+  border: none;
 }
 
 #resultsPane {
@@ -188,6 +168,12 @@ body {
   height: 600px;
   color: white;
   padding: 20px;
+}
+
+#stickyRoof {
+  z-index: 2;
+  width: 100%;
+  text-align: center;
 }
 
 #map {
@@ -243,7 +229,8 @@ body {
 }
 
 label {
-  color: #44918B;
+  font-family: Bebas, sans-serif;
+  color: #CD2634;
 }
 
 #savedVenues {
@@ -350,12 +337,15 @@ label {
 }
 
 /* New nav styles - these are overriding Bootstrap css styles */
+.navbar {
+  border-radius: 0 !important;
+}
+
 .navbar-default {
   background-color: #CD2634;
 }
 
 .navbar-default, .navbar-default a, .navbar-default li {
-  
   font-family: Bebas;
 }
 
@@ -516,14 +506,6 @@ textarea[contenteditable] {
 }
 
 @media only screen and (min-width: 768px) {
-
-/*#venueSearch, #resultsWrap {
-  float: left;
-  width: 45%;
-}*/
-
-
-
 
 .form-group {
   width: 50%;
