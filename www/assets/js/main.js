@@ -1,7 +1,11 @@
 "use strict";
 //Init hoodie
+<<<<<<< HEAD
 //var hoodie = new Appback('https://foreign-foods.appback.com/');
 var hoodie = new hoodie();
+=======
+var hoodie = new Hoodie();
+>>>>>>> parent of 5813eaa... test
 
 $(document).ready(function(){
 
