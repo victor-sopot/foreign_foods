@@ -1,6 +1,6 @@
 "use strict";
 //Init appback
-var appback = new Appback();
+var appback = new Appback('https://foreign.appback.com');
 
 $(document).ready(function(){
 
