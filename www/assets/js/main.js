@@ -59,13 +59,15 @@ $(document).ready(function(){
 
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
+<<<<<<< HEAD
 		
 
+=======
+>>>>>>> master
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
-		// Spinner
-		$("#loader1").toggle();
 
+<<<<<<< HEAD
 		$.ajax({
 			url: 'https://api.foursquare.com/v2/venues/search',
 			data: {
@@ -148,6 +150,107 @@ $(document).ready(function(){
 				$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
 			}
 		})
+=======
+		// Error checking 
+		if (category == "Select Cuisine") {
+			$('#errorResponse').show();
+			$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong>');
+		}
+		else {
+			// Spinner
+			$("#loader1").toggle();
+
+			$.ajax({
+				url: 'https://api.foursquare.com/v2/venues/search',
+				data: {
+					near: loc,
+					limit: 50,
+					intent: 'browse',
+					categoryId: category,
+					client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+					client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+					v: 20151230,
+					m: 'foursquare'
+				},
+				statusCode: {
+					400: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					},
+					401: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					},
+					403: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					},
+					404: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					},
+					405: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					},
+					409: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					},
+					500: function() {
+						$("#loader1").toggle();
+						$('#errorResponse').show();
+					}
+				}
+			})
+
+			// Plot them on Google Map
+			.done(function(response){
+				
+				// Hide the loader spinner
+				$("#loader1").toggle();
+				// Hide the error window
+				$("#errorResponse").hide();
+
+				// Once the reqeust has returned, clear the existing markers
+				clearMarkers();
+
+				//Scroll down to map
+				$('html, body').animate({
+		        	scrollTop: $("#resultsPane").offset().top
+		    	}, 1200);
+
+				// Grab Fourequare response data assuming it's a good request.
+				var venues = response.response.venues;
+				var responseGeocode = response.response.geocode.feature.geometry.center;
+				var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
+				map.panTo(geocode);
+				$.each(venues, function(key, venues) {
+					var venueID = venues.id;
+					var name = venues.name;
+					var lat = venues.location.lat;
+					var lng = venues.location.lng;
+					var latlng = new google.maps.LatLng(lat,lng);
+					var marker = new google.maps.Marker({
+						position: latlng,
+						title: name
+					});
+					marker.addListener('click', function() {
+						venueDetails(venueID, name, latlng);
+					})
+					markers.push(marker);
+					setMarkers(map);
+				});
+			})
+			.fail(function(response){
+				if (response.responseJSON.meta.errorType == 'failed_geocode') {
+					$("#errorText").html('<strong>Uhoh! Couldn\'t find that location.</strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>')
+				} else if (response.responseJSON.meta.errorType == 'param_error') {
+					$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
+				}
+			})
+		}
+>>>>>>> master
 	});
 
 	$("#tryagain").on('click', function() {
@@ -285,7 +388,9 @@ $(document).ready(function(){
 
 	function showErrorMessage(error) {
 		console.log(error);
-		alert(error);
+		$("#errorResponse").show();
+		$("#errorResponse #errorText").html('<strong>Error logging in: </strong>' + error.message);
+		//alert(error);
 	}
 	
     function loadCategories() {

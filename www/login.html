@@ -80,13 +80,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div id="banner">
-                    <h1 class="pageTitle">Login</h1>
+                    <h1 class="pageTitle">Foreign Foods</h1>
                 </div>
             </div>
         </div>
-
+    </div>
+    <div id="loginPage" class="container panel">
         <div class="row">
             <div class="col-md-12">
+<<<<<<< HEAD
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Hey Rambo! </strong><a href="login.html" class="alert-link">Better log in</a>, or your venues will only be stored on this computer. You could also <a href="register.html" class="alert-link">create an account</a>
@@ -97,16 +99,26 @@
         <div class="row">
             <div class="col-md-12" id="loginPage">
             <h1>Login</h1>
+=======
+                <h1>Login</h1>
+>>>>>>> master
                 <form id="loginForm">
-                    <div class="form-group">
+                    <div class="form-group form-group-lg">
                         <label for="username">Username</label>
                         <input required type="text" class="form-control" id="username" placeholder="Username">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form-group-lg">
                         <label for="password">Password</label>
                         <input required type="password" class="form-control" id="password" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-default">Login</button>
+                    <div class="form-group form-group-lg">
+                        <button type="submit" class="btn btn-login btn-lg">Login</button>
+                    </div>
+                    <div id="errorResponse" class="form-group center">
+                        <div class="alert alert-danger" role="alert">
+                            <p id="errorText"></p>
+                        </div>
+                    </div>
                 </form>
             </div>
             <!--Markup for post-registration-->
