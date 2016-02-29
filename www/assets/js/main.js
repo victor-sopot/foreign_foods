@@ -48,7 +48,7 @@ $(document).ready(function(){
 		var new_password = $("#new_password").val();
 		hoodie.account.signUp(new_username, new_password)
 			.done(function (user) {
-	    		window.location = "/";
+	    		window.location = "index.html";
 			})
 			.fail(showErrorMessage);
 	});
