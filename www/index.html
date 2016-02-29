@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" manifest="food.appcache">
     <head>
         <meta charset="utf-8">
         <title>Foreign Foods - running</title>
@@ -170,16 +170,19 @@
         </div>
     </div>
 
-        <!-- Add your site or application content here -->
+        <!-- Google Maps -->
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWX09Ik2jlbjpjHzN9c59zO_2H9JYQlsE&region=GB" type="text/javascript"></script>
-        <script src="assets/vendor/jquery-2.1.0.min.js"></script>
-        <script src="/_api/_files/hoodie.js"></script>
+        <!-- Add your site or application content here -->
+        <script src="assets/vendor/jquery-2.1.4.min.js"></script>
 
+        <!-- Link to online hosted Hoodie backend -->
+        <script src="https://foreignfoods.appback.com/appback.js"></script>
+    
         <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/gmaps.js"></script>
         <script src="assets/js/helper.js"></script>
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
-        <script src="assets/js/gmaps.js"></script>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <!-- <script>
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
