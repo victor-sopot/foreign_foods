@@ -1,4 +1,7 @@
 CACHE MANIFEST
+# 2016-02-29 v2
+
+CACHE:
 /assets/css/bootstrap.css
 /assets/css/main.css
 /assets/fonts/bebas-webfont.ttf
@@ -23,4 +26,4 @@ NETWORK:
 *
 
 FALLBACK:
-offline.html
+/ offline.html

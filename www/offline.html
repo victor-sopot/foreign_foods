@@ -66,7 +66,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="../">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="../">Home</a></li>
                     <li><a href="my-restaurants.html">My Restaurants</a></li>
                     </ul>
                 <div id="useractions">
@@ -94,84 +94,17 @@
         </div>
     </div>
 
-    <div id="mainboard" class="container">
+    <div class="container center">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Hey Rambo! </strong><a href="login.html" class="alert-link">Better log in</a>, or your venues will only be stored on this computer. You could also <a href="register.html" class="alert-link">create an account</a>
-                </div>
+                <h3>Offline Mode</h3>
             </div>
+        </div>
+
+        <div class="row">
+            <a href="my-restaurants.html" class="btn btn-default">View Saved Restaurants</a>
         </div>
     </div>
-
-    <div id="venueSearch" class="container panel">
-        <div class="row">
-            <div class="col-md-12">
-                    <h2 class="panelTitle">Search for foreign foods in your area!</h2 class="panelTitle">
-            </div>
-        </div>
-        <form>
-            <div class="form-group">
-                <label for="locInput">Enter Location</label>
-                <input id="locInput" type="text" class="form-control input-lg">
-            </div>
-            <div class="form-group">
-                <label for="cuisineInput">Choose a cuisine</label>
-                <select id="cuisineInput" class="form-control input-lg">
-                </select>       
-            </div>
-        </form>
-
-        <div class="row center">
-            <div class="col-md-12">
-                <button id="search" type="button" class="btn btn-default">Go!</button>
-                <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
-            </div>
-        </div>
-
-        <div class="row center" id="errorResponse">
-            <div class="col-md-12">
-                <div class="alert alert-danger" role="alert">
-                    <p id="errorText"></p>
-                    <button id="tryagain" type="button" class="btn btn-default">Try again</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="resultsWrap" class="container panel">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="panelTitle">Results</h2>
-                <div id="resultsPane">
-                    <div id="map"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-            <img id="loader2" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
-                <div id="selectedRest">
-                    <h3 id="selectedHead"></h3>
-                    <dl id="address" class="dl-horizontal">
-                    </dl>
-                    <p id="telephone"></p>
-                    <p id="url"></p>
-                    <button id="saveRestaurant" class="btn btn-default">Save!</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div id="response"></div>
-            </div>
-        </div>
-    </div>
-
-        <!-- Google Maps -->
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWX09Ik2jlbjpjHzN9c59zO_2H9JYQlsE&region=GB" type="text/javascript"></script>
         <!-- Add your site or application content here -->
         <script src="assets/vendor/jquery-2.1.4.min.js"></script>
 
