@@ -1,14 +1,20 @@
 "use strict";
-//Init appback
-var appback = new Appback('https://foreign.appback.com');
+//Init hoodie
+var hoodie = new Hoodie();
 
 $(document).ready(function(){
 
+	hoodie.appCache.start().then(showAppIsCachedNotification);
+
+	function showAppIsCachedNotification() {
+		console.log('HEYYYY');
+	}
+
 	// Check if there's a user logged in
 
-	if (appback.account.username)
+	if (hoodie.account.username)
 	{
-		logged_in(appback.account.username);
+		logged_in(hoodie.account.username);
 	} else {
 		not_logged_in();
 	}
@@ -35,7 +41,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var username  = $('#username').val();
 	  	var password  = $('#password').val();
-	  	appback.account.signIn(username, password)
+	  	hoodie.account.signIn(username, password)
 	    	.done(function (user) {
 	    		window.location = "index.html";
 	    	})
@@ -46,7 +52,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var new_username = $("#new_username").val();
 		var new_password = $("#new_password").val();
-		appback.account.signUp(new_username, new_password)
+		hoodie.account.signUp(new_username, new_password)
 			.done(function (user) {
 	    		window.location = "index.html";
 			})
@@ -54,7 +60,7 @@ $(document).ready(function(){
 	});
 
 	$("#logout").on('click', function(){
-		appback.account.signOut({ignoreLocalChanges: true})
+		hoodie.account.signOut({ignoreLocalChanges: true})
   		.done(function (user) {
   			window.location = "index.html";
   		})
@@ -183,7 +189,7 @@ $(document).ready(function(){
 		var iconPrefix = $("#selectedRest").attr('data-i-prefix');
 		var iconSuffix = $("#selectedRest").attr('data-i-suffix');
 
-		appback.store.add('venue', { 
+		hoodie.store.add('venue', { 
 			name : name, 
 			coords : latlng, 
 			address: address, 
@@ -207,7 +213,7 @@ $(document).ready(function(){
 	})
 
 	function findVenues() {
-		appback.store.findAll('venue')
+		hoodie.store.findAll('venue')
 		.done(function(allVenues) {
 			// LOOP THE VENUES //
 			if (allVenues.length == 0) {
@@ -246,7 +252,7 @@ $(document).ready(function(){
 			$("#deleteVenue").on('click', function(event){
 				event.preventDefault();
 			    if (confirm("Are you sure?") == true) {
-		        	appback.store.remove('venue', id)
+		        	hoodie.store.remove('venue', id)
 		        	.done(function(removedVenue) {
 		        		alert(removedVenue.name + ' has been removed from your account.')
 		        		window.location = "my-restaurants.html";
