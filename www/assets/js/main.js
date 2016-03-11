@@ -4,12 +4,6 @@ var hoodie = new Hoodie();
 
 $(document).ready(function(){
 
-	hoodie.appCache.start().then(showAppIsCachedNotification);
-
-	function showAppIsCachedNotification() {
-		console.log('HEYYYY');
-	}
-
 	// Check if there's a user logged in
 
 	if (hoodie.account.username)

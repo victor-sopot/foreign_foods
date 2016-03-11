@@ -22,3 +22,13 @@
 }());
 
 // Place any jQuery/helper plugins in here.
+$(document).ready(function(){
+
+    hoodie.appCache.start().then(showAppIsCachedNotification);
+
+    function showAppIsCachedNotification() {
+        console.log('HEYYYY');
+    }
+
+
+})
