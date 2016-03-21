@@ -204,7 +204,11 @@ $(document).ready(function(){
 	// View on Map
 	$("#locateBtn").on('click', function(){
 			//todo
-	})
+	});
+
+	hoodie.store.on('venue:add', function(venue) {
+    	appCacheNanny.update();
+	});
 
 	function findVenues() {
 		hoodie.store.findAll('venue')
@@ -237,7 +241,7 @@ $(document).ready(function(){
 				$("#info #city").text($(this).attr('data-city'));
 				$("#info #postcode").text($(this).attr('data-postcode'));
 				$("#info #tel").html("<span class='glyphicon glyphicon-earphone'></span> " + $(this).attr('data-tel'));
-				$("#info #url").html("<a href='" + $(this).attr('data-url') + "' _target='blank'>" + $(this).attr('data-url') + "</a>");
+				$("#info #url").html("<a href='" + $(this).attr('data-url') + "' target='_blank'>" + $(this).attr('data-url') + "</a>");
 
 				$(this).attr('data-selected', 'true');
 				id = $(this).attr('data-id');
