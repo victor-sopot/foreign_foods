@@ -128,7 +128,6 @@ body {
 .panel {
   background-color: white;
   margin-bottom: 50px;
-
 }
 
 #titleheader {
@@ -160,7 +159,7 @@ body {
   color: #CD2634; /* Hot rod red */
 }
 
-#mainboard {
+#mainboard, #welcome {
   text-align: center;
   font-size: 1.7rem;
 }
