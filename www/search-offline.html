@@ -113,6 +113,15 @@
                     <h2 class="panelTitle">Search for foreign foods in your area!</h2 class="panelTitle">
             </div>
         </div>
+
+        <div class="row center">
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <p>You are offline! Your search will be saved for later!</p>
+                </div>
+            </div>
+        </div>
+
         <form>
             <div class="form-group">
                 <label for="locInput">Enter Location</label>
@@ -126,58 +135,17 @@
 
             <div class="row center">
                 <div class="col-md-12">
-                    <button id="search" type="button" class="btn btn-default">Go!</button>
+                    <button id="search" type="button" class="btn btn-default">Save</button>
                     <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
                 </div>
             </div>
         </form>
-
-        <div class="row center" id="errorResponse">
-            <div class="col-md-12">
-                <div class="alert alert-danger" role="alert">
-                    <p id="errorText"></p>
-                    <button id="tryagain" type="button" class="btn btn-default">Try again</button>
-                </div>
-            </div>
-        </div>
     </section>
 
     <section class="container panel">
         <div class="row">
             <div class="col-md-6 center"><h2>Fun Fact</h2></div>
             <div class="col-md-6 center"><h2>App Tip!</h2></div>
-        </div>
-    </section>
-
-    <!-- RESULTS SECTION  -->
-    <section id="resultsWrap" class="container panel">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="panelTitle">Results</h2>
-                <div id="resultsPane">
-                    <div id="map"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-            <img id="loader2" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
-                <div id="selectedRest">
-                    <h3 id="selectedHead"></h3>
-                    <dl id="address" class="dl-horizontal">
-                    </dl>
-                    <p id="telephone"></p>
-                    <p id="url"></p>
-                    <button id="saveRestaurant" class="btn btn-default">Save!</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div id="response"></div>
-            </div>
         </div>
     </section>
 

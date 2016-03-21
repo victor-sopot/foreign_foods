@@ -4,6 +4,7 @@ var hoodie = new Hoodie();
 
 $(document).ready(function(){
 
+	console.log(hoodie);
 	// Check if there's a user logged in
 
 	if (hoodie.account.username)
