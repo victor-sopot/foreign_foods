@@ -3,8 +3,7 @@
 var hoodie = new Hoodie();
 
 $(document).ready(function(){
-
-	console.log(hoodie);
+	//console.log(hoodie);
 	// Check if there's a user logged in
 
 	if (hoodie.account.username)
@@ -173,42 +172,41 @@ $(document).ready(function(){
 	})
 
 	$("#saveRestaurant").on('click', function () {
-		var name = $("#selectedRest").attr('data-name');
-		var latlng = $("#selectedRest").attr('data-latlng');
-		var address = $("#selectedRest").attr('data-address');
-		var street = $("#selectedRest").attr('data-street');
-		var city = $("#selectedRest").attr('data-city');
-		var postcode = $("#selectedRest").attr('data-postcode');
-		var venueTel = $("#selectedRest").attr('data-tel');
-		var url = $("#selectedRest").attr('data-url');
-		var iconPrefix = $("#selectedRest").attr('data-i-prefix');
-		var iconSuffix = $("#selectedRest").attr('data-i-suffix');
+		var thisVenueID = $("#selectedRest").attr('data-venue-id');
 
-		hoodie.store.add('venue', { 
-			name : name, 
-			coords : latlng, 
-			address: address, 
-			street: street, 
-			city: city,
-			postcode: postcode,
-			tel: venueTel,
-			url: url,
-			iconp : iconPrefix,
-			icons : iconSuffix
+		hoodie.store.find('attribute', thisVenueID)
+		.done(function(attribute){
+			hoodie.store.add('venue', attribute)
+			.done(function(){
+				count++;
+				$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
+			})
+			.fail(function(error){
+				console.log(error);
+			})
 		})
-		.done(function(){
-			count++;
-			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
-		})
+		.fail(function(error){
+			console.log(error);
+			alert(error + 'You already have this one saved :) ');
+		});
+
+		// var name = $("#selectedRest").attr('data-name');
+		// var latlng = $("#selectedRest").attr('data-latlng');
+		// var address = $("#selectedRest").attr('data-address');
+		// var street = $("#selectedRest").attr('data-street');
+		// var city = $("#selectedRest").attr('data-city');
+		// var postcode = $("#selectedRest").attr('data-postcode');
+		// var tel = $("#selectedRest").attr('data-tel');
+		// var url = $("#selectedRest").attr('data-url');
+		// var iconPrefix = $("#selectedRest").attr('data-i-prefix');
+		// var iconSuffix = $("#selectedRest").attr('data-i-suffix');
+
+		
 	})
 
 	// View on Map
 	$("#locateBtn").on('click', function(){
 			//todo
-	});
-
-	hoodie.store.on('venue:add', function(venue) {
-    	appCacheNanny.update();
 	});
 
 	function findVenues() {
@@ -225,11 +223,16 @@ $(document).ready(function(){
 		});
 	}
 
+
 	function retreiveVenues(object)
 	{
 		var id;
 		$("#restaurantSide button").removeAttr("disabled");
 		$.each(object, function(key, object) {
+				console.log(object);
+
+
+
 				$("#restaurants ul").append($("<li data-created='"+ object.createdAt + "' data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
 			})
 			$("#restaurants li").on('click', function(event){
@@ -375,7 +378,7 @@ $(document).ready(function(){
 			$("#loader2").toggle();
 			var venue = response.response.venue;
 
-			var venueTel = getProperty(venue.contact, 'formattedPhone');
+			var tel = getProperty(venue.contact, 'formattedPhone');
 			var address = getProperty(venue.location, 'address');
 			var street = getProperty(venue.location, 'crossStreet');
 			var city = getProperty(venue.location, 'city');			
@@ -387,29 +390,38 @@ $(document).ready(function(){
 			$("#address").html("");
 
 			$("#selectedRest").show();
-			$("#selectedRest").attr('data-venue-id', venueID);
-			$("#selectedRest").attr('data-name', name);
-			$("#selectedRest").attr('data-latlng', latlng);
-			$("#selectedRest").attr('data-address', address);
-			$("#selectedRest").attr('data-street', street);
-			$("#selectedRest").attr('data-city', city);
-			$("#selectedRest").attr('data-postcode', postcode);
-			$("#selectedRest").attr('data-tel', venueTel);
-			$("#selectedRest").attr('data-url', url);
-			$("#selectedRest").attr('data-i-prefix', iconPrefix);
-			$("#selectedRest").attr('data-i-suffix', iconSuffix);
 
-			$("#selectedHead").text(name);
-			$("<dt>Title: </dt><dd>" + address + "</dd>").appendTo("#address");
-			$("<dt>Street: </dt><dd>" + street + "</dd>").appendTo("#address");
-			$("<dt>City: </dt><dd>" + city + "</dd>").appendTo("#address");
-			$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
-			$("<dt>Telephone: </dt><dd>" + venueTel + "</dd>").appendTo("#address");
-			$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+			hoodie.store.updateOrAdd('attribute', venueID, {
+				id: venueID,
+				name: name,
+				latlng: latlng,
+				address: address,
+				street: street,
+				city: city,
+				postcode: postcode,
+				tel: tel,
+				url: url,
+				iconp: iconPrefix,
+				icons: iconSuffix
+			})
+			.done(function(){
+				$("#selectedRest").attr('data-venue-id', venueID);
 
-			$('html, body').animate({
-    	    	scrollTop: $("#selectedRest").offset().top
-   	 		}, 1200);
+				$("#selectedHead").text(name);
+				$("<dt>Title: </dt><dd>" + address + "</dd>").appendTo("#address");
+				$("<dt>Street: </dt><dd>" + street + "</dd>").appendTo("#address");
+				$("<dt>City: </dt><dd>" + city + "</dd>").appendTo("#address");
+				$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
+				$("<dt>Telephone: </dt><dd>" + tel + "</dd>").appendTo("#address");
+				$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+
+				$('html, body').animate({
+	    	    	scrollTop: $("#selectedRest").offset().top
+	   	 		}, 1200);
+			})
+			.fail(function(error){
+				alert(error + 'You already saved that one :) ');
+			})
 		});
 	}
 
