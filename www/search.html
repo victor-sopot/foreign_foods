@@ -112,6 +112,10 @@
             <div class="form-group">
                 <label for="locInput">Enter Location</label>
                 <input required id="locInput" type="text" class="form-control input-lg">
+
+                <ul id="recentsearches" class="list-inline">
+                    <span class="meta">You recently searched: </span>
+                </ul>
             </div>
             <div class="form-group">
                 <label for="cuisineInput">Choose a cuisine</label>
@@ -152,8 +156,15 @@
     <!-- RESULTS SECTION  -->
     <section id="resultsWrap" class="container panel">
         <div class="row">
-            <div class="col-md-12">
-                <h2 class="panelTitle">Results</h2>
+            <h2 class="panelTitle">Results</h2>
+            <div class="col-md-5">
+                <div id="textResults">
+                    <h4>You searched for:</h4>
+                    <ul id="venueList">                        
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-7">
                 <div id="resultsPane">
                     <div id="map"></div>
                 </div>

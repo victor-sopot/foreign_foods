@@ -5,7 +5,6 @@ var hoodie = new Hoodie();
 $(document).ready(function(){
 	//console.log(hoodie);
 	// Check if there's a user logged in
-
 	if (hoodie.account.username)
 	{
 		logged_in(hoodie.account.username);
@@ -61,10 +60,59 @@ $(document).ready(function(){
   		.fail(showErrorMessage);
 	});
 
+	hoodie.store.findAll('search')
+	.done(function(recentsearches){
+		$.each(recentsearches, function(key, search){
+			$("#recentsearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
+			console.log(recentsearches);
+		})
+	})
+	.fail(function(error){
+		console.log('Something went wrong: ' + error);
+	});
+
+	hoodie.store.on('search:add', function(search){
+		$("#recentsearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
+	});
+
+	//As #recentsearches li's are dynamically added a few lines above, 
+	// I needed to use the 'document' selector to act as the listener element
+	$(document).on('click', '#recentsearches li', function(event) {
+		event.preventDefault();
+		var id = $(this).attr('data-id');
+		console.log(id);
+
+		hoodie.store.find('search', id)
+		.done(function(search){
+			runSearchQuery(search.location, search.categoryId);
+		})
+		.fail(function(error){
+			console.log(error);
+		})
+	});
+
+	$("#locInput").focus(function(){
+		$("#recentsearches").slideDown();
+	})
+
+	$("#venueSearch form").blur(function(){
+		$("#recentsearches").slideUp();
+	})
+
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
+		var categoryTxt = $("#cuisineInput option:selected").text();
+
+		hoodie.store.add('search', {
+			location: loc,
+			categoryId: category,
+			categoryName: categoryTxt
+		})
+		.fail(function(error){
+			console.log(error);
+		})
 
 		// Error checking 
 		if (category == "Select Cuisine") {
@@ -73,97 +121,7 @@ $(document).ready(function(){
 		}
 		else {
 			// Spinner
-			$("#loader1").toggle();
-
-			$.ajax({
-				url: 'https://api.foursquare.com/v2/venues/search',
-				data: {
-					near: loc,
-					limit: 50,
-					intent: 'browse',
-					categoryId: category,
-					client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
-					client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
-					v: 20151230,
-					m: 'foursquare'
-				},
-				statusCode: {
-					400: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					},
-					401: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					},
-					403: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					},
-					404: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					},
-					405: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					},
-					409: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					},
-					500: function() {
-						$("#loader1").toggle();
-						$('#errorResponse').show();
-					}
-				}
-			})
-
-			// Plot them on Google Map
-			.done(function(response){
-				
-				// Hide the loader spinner
-				$("#loader1").toggle();
-				// Hide the error window
-				$("#errorResponse").hide();
-
-				// Once the reqeust has returned, clear the existing markers
-				clearMarkers();
-
-				//Scroll down to map
-				$('html, body').animate({
-		        	scrollTop: $("#resultsPane").offset().top
-		    	}, 1200);
-
-				// Grab Fourequare response data assuming it's a good request.
-				var venues = response.response.venues;
-				var responseGeocode = response.response.geocode.feature.geometry.center;
-				var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
-				map.panTo(geocode);
-				$.each(venues, function(key, venues) {
-					var venueID = venues.id;
-					var name = venues.name;
-					var lat = venues.location.lat;
-					var lng = venues.location.lng;
-					var latlng = new google.maps.LatLng(lat,lng);
-					var marker = new google.maps.Marker({
-						position: latlng,
-						title: name
-					});
-					marker.addListener('click', function() {
-						venueDetails(venueID, name, latlng);
-					})
-					markers.push(marker);
-					setMarkers(map);
-				});
-			})
-			.fail(function(response){
-				if (response.responseJSON.meta.errorType == 'failed_geocode') {
-					$("#errorText").html('<strong>Uhoh! Couldn\'t find that location.</strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>')
-				} else if (response.responseJSON.meta.errorType == 'param_error') {
-					$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
-				}
-			})
+			runSearchQuery(loc, category);
 		}
 	});
 
@@ -189,25 +147,107 @@ $(document).ready(function(){
 			console.log(error);
 			alert(error + 'You already have this one saved :) ');
 		});
-
-		// var name = $("#selectedRest").attr('data-name');
-		// var latlng = $("#selectedRest").attr('data-latlng');
-		// var address = $("#selectedRest").attr('data-address');
-		// var street = $("#selectedRest").attr('data-street');
-		// var city = $("#selectedRest").attr('data-city');
-		// var postcode = $("#selectedRest").attr('data-postcode');
-		// var tel = $("#selectedRest").attr('data-tel');
-		// var url = $("#selectedRest").attr('data-url');
-		// var iconPrefix = $("#selectedRest").attr('data-i-prefix');
-		// var iconSuffix = $("#selectedRest").attr('data-i-suffix');
-
-		
 	})
 
 	// View on Map
 	$("#locateBtn").on('click', function(){
 			//todo
 	});
+
+	function runSearchQuery(loc, category){
+		$("#loader1").toggle();
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/search',
+			data: {
+				near: loc,
+				limit: 50,
+				intent: 'browse',
+				categoryId: category,
+				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+				v: 20151230,
+				m: 'foursquare'
+			},
+			statusCode: {
+				400: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				401: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				403: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				404: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				405: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				409: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				500: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				}
+			}
+		})
+		// Plot them on Google Map
+		.done(function(response){
+			
+			// Hide the loader spinner
+			$("#loader1").toggle();
+			// Hide the error window
+			$("#errorResponse").hide();
+
+			// Once the reqeust has returned, clear the existing markers
+			clearMarkers();
+
+			//Scroll down to map
+			$('html, body').animate({
+	        	scrollTop: $("#resultsPane").offset().top
+	    	}, 1200);
+
+			// Grab Fourequare response data assuming it's a good request.
+			var venues = response.response.venues;
+			var responseGeocode = response.response.geocode.feature.geometry.center;
+			var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
+			map.panTo(geocode);
+			$.each(venues, function(key, venues) {
+				var venueID = venues.id;
+				var name = venues.name;
+				var lat = venues.location.lat;
+				var lng = venues.location.lng;
+				var latlng = new google.maps.LatLng(lat,lng);
+				var marker = new google.maps.Marker({
+					position: latlng,
+					title: name
+				});
+				marker.addListener('click', function() {
+					venueDetails(venueID, name, latlng);
+				})
+				markers.push(marker);
+				setMarkers(map);
+
+				$("#venueList").append('<li>' + name + '</li>');
+
+			});
+		})
+		.fail(function(response){
+			if (response.responseJSON.meta.errorType == 'failed_geocode') {
+				$("#errorText").html('<strong>Uhoh! Couldn\'t find that location. Try using searching by city & country: </strong><br /><br /><strong>bristol, uk</strong> or <strong>north carolina, usa</strong><br /><br /><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>')
+			} else if (response.responseJSON.meta.errorType == 'param_error') {
+				$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
+			}
+		})
+	}
 
 	function findVenues() {
 		hoodie.store.findAll('venue')
@@ -230,9 +270,6 @@ $(document).ready(function(){
 		$("#restaurantSide button").removeAttr("disabled");
 		$.each(object, function(key, object) {
 				console.log(object);
-
-
-
 				$("#restaurants ul").append($("<li data-created='"+ object.createdAt + "' data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
 			})
 			$("#restaurants li").on('click', function(event){
