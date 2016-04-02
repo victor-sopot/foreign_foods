@@ -3,7 +3,8 @@
 var hoodie = new Hoodie();
 
 $(document).ready(function(){
-	//console.log(hoodie);
+
+	console.log(hoodie);
 	// Check if there's a user logged in
 	if (hoodie.account.username)
 	{
@@ -24,6 +25,7 @@ $(document).ready(function(){
 
 	var markers = [];
 	var count = 0;
+	var missingData = false;
 
 	$('#venueTabs a').click(function (e) {
 		e.preventDefault()
@@ -63,7 +65,7 @@ $(document).ready(function(){
 	hoodie.store.findAll('search')
 	.done(function(recentsearches){
 		$.each(recentsearches, function(key, search){
-			$("#recentsearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
+			$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
 			console.log(recentsearches);
 		})
 	})
@@ -72,32 +74,24 @@ $(document).ready(function(){
 	});
 
 	hoodie.store.on('search:add', function(search){
-		$("#recentsearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
+		$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
 	});
 
 	//As #recentsearches li's are dynamically added a few lines above, 
 	// I needed to use the 'document' selector to act as the listener element
-	$(document).on('click', '#recentsearches li', function(event) {
+	$(document).on('click', '#recentSearches li', function(event) {
 		event.preventDefault();
 		var id = $(this).attr('data-id');
 		console.log(id);
 
 		hoodie.store.find('search', id)
 		.done(function(search){
-			runSearchQuery(search.location, search.categoryId);
+			runSearchQuery(search.location, search.categoryId, search.categoryName);
 		})
 		.fail(function(error){
 			console.log(error);
 		})
 	});
-
-	$("#locInput").focus(function(){
-		$("#recentsearches").slideDown();
-	})
-
-	$("#venueSearch form").blur(function(){
-		$("#recentsearches").slideUp();
-	})
 
 	// Take the location in the input box and the category then query foursquare API with them
 	$("#search").on('click', function() {
@@ -120,8 +114,7 @@ $(document).ready(function(){
 			$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong>');
 		}
 		else {
-			// Spinner
-			runSearchQuery(loc, category);
+			runSearchQuery(loc, category, categoryTxt);
 		}
 	});
 
@@ -130,18 +123,32 @@ $(document).ready(function(){
 	})
 
 	$("#saveRestaurant").on('click', function () {
-		var thisVenueID = $("#selectedRest").attr('data-venue-id');
+		var name = $("#selectedRest").attr('data-name');
+		var latlng = $("#selectedRest").attr('data-latlng');
+		var address = $("#selectedRest").attr('data-address');
+		var street = $("#selectedRest").attr('data-street');
+		var city = $("#selectedRest").attr('data-city');
+		var postcode = $("#selectedRest").attr('data-postcode');
+		var venueTel = $("#selectedRest").attr('data-tel');
+		var url = $("#selectedRest").attr('data-url');
+		var iconPrefix = $("#selectedRest").attr('data-i-prefix');
+		var iconSuffix = $("#selectedRest").attr('data-i-suffix');
 
-		hoodie.store.find('attribute', thisVenueID)
-		.done(function(attribute){
-			hoodie.store.add('venue', attribute)
-			.done(function(){
-				count++;
-				$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
-			})
-			.fail(function(error){
-				console.log(error);
-			})
+		hoodie.store.add('venue', { 
+			name : name, 
+			coords : latlng, 
+			address: address, 
+			street: street, 
+			city: city,
+			postcode: postcode,
+			tel: venueTel,
+			url: url,
+			iconp : iconPrefix,
+			icons : iconSuffix
+		})
+		.done(function(){
+			count++;
+			$("#response").html(count + " Restaurants Added! View on <a href='my-restaurants.html'>your restaurants page</a>.");
 		})
 		.fail(function(error){
 			console.log(error);
@@ -154,7 +161,7 @@ $(document).ready(function(){
 			//todo
 	});
 
-	function runSearchQuery(loc, category){
+	function runSearchQuery(loc, category, categoryName){
 		$("#loader1").toggle();
 		$.ajax({
 			url: 'https://api.foursquare.com/v2/venues/search',
@@ -210,9 +217,12 @@ $(document).ready(function(){
 			// Once the reqeust has returned, clear the existing markers
 			clearMarkers();
 
+			// Reset the text results list
+			$("#venueList").html("");
+
 			//Scroll down to map
 			$('html, body').animate({
-	        	scrollTop: $("#resultsPane").offset().top
+	        	scrollTop: $("#resultsWrap").offset().top
 	    	}, 1200);
 
 			// Grab Fourequare response data assuming it's a good request.
@@ -231,12 +241,14 @@ $(document).ready(function(){
 					title: name
 				});
 				marker.addListener('click', function() {
-					venueDetails(venueID, name, latlng);
+					runSingleQuery(venueID, name, latlng);
 				})
 				markers.push(marker);
 				setMarkers(map);
 
-				$("#venueList").append('<li>' + name + '</li>');
+
+				$("#textResults > h4").text(categoryName + ' food in ' + loc);
+				$("#venueList").append('<li data-latlng="'+ latlng +'" data-id="'+ venueID +'">' + name + '</li>');
 
 			});
 		})
@@ -248,6 +260,15 @@ $(document).ready(function(){
 			}
 		})
 	}
+
+	$(document).on('click', '#textResults li', function(event){
+
+		var venueID = $(this).attr('data-id');
+		var name = $(this).text();
+		var latlng = $(this).attr('data-latlng');
+
+		runSingleQuery(venueID, name, latlng);
+	})
 
 	function findVenues() {
 		hoodie.store.findAll('venue')
@@ -262,7 +283,6 @@ $(document).ready(function(){
 		    }
 		});
 	}
-
 
 	function retreiveVenues(object)
 	{
@@ -398,9 +418,7 @@ $(document).ready(function(){
 		markers = [];
 	}
 
-		
-
-	function venueDetails(venueID, name, latlng) {
+	function runSingleQuery(venueID, name, latlng) {
 		$("#loader2").toggle();
 		$.ajax({
 			url: 'https://api.foursquare.com/v2/venues/' + venueID,
@@ -414,8 +432,7 @@ $(document).ready(function(){
 		.done(function(response) {
 			$("#loader2").toggle();
 			var venue = response.response.venue;
-
-			var tel = getProperty(venue.contact, 'formattedPhone');
+			var venueTel = getProperty(venue.contact, 'formattedPhone');
 			var address = getProperty(venue.location, 'address');
 			var street = getProperty(venue.location, 'crossStreet');
 			var city = getProperty(venue.location, 'city');			
@@ -424,51 +441,69 @@ $(document).ready(function(){
 			var iconPrefix = getProperty(venue.categories[0].icon, 'prefix');
 			var iconSuffix = getProperty(venue.categories[0].icon, 'suffix');
 
+			var replacedN = name.replace(/ /g, "+");
+			var replacedC = city.replace(/ /g)
+			var query = "http://googl.com/#q=" + name.replace(/ |&/g, "+") + "+" + city.replace(/ /g,"+");
+
+			//Reset the address field as the data is being APPENDED to this element
+			// so need to reset it each time a marker is clicked
 			$("#address").html("");
 
 			$("#selectedRest").show();
 
-			hoodie.store.updateOrAdd('attribute', venueID, {
-				id: venueID,
-				name: name,
-				latlng: latlng,
-				address: address,
-				street: street,
-				city: city,
-				postcode: postcode,
-				tel: tel,
-				url: url,
-				iconp: iconPrefix,
-				icons: iconSuffix
-			})
-			.done(function(){
-				$("#selectedRest").attr('data-venue-id', venueID);
+			if (missingData) {
+				$("#noDataMsg").show();
+				$("#noDataMsg").html(onlineErrors.text);
+				$("#noDataMsg a").attr('href', query);
+			}
+			else {
+				$("#noDataMsg").hide();
+			}
 
-				$("#selectedHead").text(name);
-				$("<dt>Title: </dt><dd>" + address + "</dd>").appendTo("#address");
-				$("<dt>Street: </dt><dd>" + street + "</dd>").appendTo("#address");
-				$("<dt>City: </dt><dd>" + city + "</dd>").appendTo("#address");
-				$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
-				$("<dt>Telephone: </dt><dd>" + tel + "</dd>").appendTo("#address");
-				$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+			$("#selectedRest").attr('data-venue-id', venueID);
+			$("#selectedRest").attr('data-name', name);
+			$("#selectedRest").attr('data-latlng', latlng);
+			$("#selectedRest").attr('data-address', address);
+			$("#selectedRest").attr('data-street', street);
+			$("#selectedRest").attr('data-city', city);
+			$("#selectedRest").attr('data-postcode', postcode);
+			$("#selectedRest").attr('data-tel', venueTel);
+			$("#selectedRest").attr('data-url', url);
+			$("#selectedRest").attr('data-i-prefix', iconPrefix);
+			$("#selectedRest").attr('data-i-suffix', iconSuffix);
 
-				$('html, body').animate({
-	    	    	scrollTop: $("#selectedRest").offset().top
-	   	 		}, 1200);
-			})
-			.fail(function(error){
-				alert(error + 'You already saved that one :) ');
-			})
+			$("#selectedHead").text(name);
+			$("<dt>Title: </dt><dd>" + address + "</dd>").appendTo("#address");
+			$("<dt>Street: </dt><dd>" + street + "</dd>").appendTo("#address");
+			$("<dt>City: </dt><dd>" + city + "</dd>").appendTo("#address");
+			$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
+			$("<dt>Telephone: </dt><dd>" + venueTel + "</dd>").appendTo("#address");
+			$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+
+			$('html, body').animate({
+    	    	scrollTop: $("#selectedRest").offset().top
+   	 		}, 1200);
 		});
 	}
 
 	function getProperty(object, property){
 		if (typeof object[property] === "undefined")
 		{
+			missingData = true;
 			return "";
 		} else {
 			return object[property];
 		}
+	}
+
+	var onlineErrors = {
+		'name' : 'Missing Data',
+		'text' : '<span class="mif-3x mif-sync-problem"></span><br /><strong>It looks like there is some data missing.</strong><p>Search <a id="searchExt" target="_blank"> elsewhere?</a></p>'
+	}
+
+	var offlineErrors = {
+		'name' : 'Missing Data',
+		'text' : '<strong>There is some data missing</strong><p>Try again once you regain an Internet connection</p>'
 	}
 });
 

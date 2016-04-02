@@ -105,8 +105,8 @@ textarea {
 }
 
 @font-face {
-  font-family: Poiret;
-  src: url('../fonts/PoiretOne-Regular.ttf') format('truetype');
+  font-family: OpenSansCondensed;
+  src: url('../fonts/OpenSans-CondLight.ttf') format('truetype');
 }
 
 body {
@@ -127,7 +127,7 @@ body {
 }
 
 .row {
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 .panel {
@@ -146,14 +146,13 @@ body {
 }
 
 #banner {
-  padding: 10px 0;
   margin: auto;
 }
 
 .panelTitle {
   font-family: Kaushan;
   text-align: center;
-  font-size: 4.2rem;
+  font-size: 3rem;
   color: #CD2634; /* Hot rod red */
 }
 
@@ -174,7 +173,7 @@ body {
 }
 
 .meta {
-  font-family: Poiret;
+  font-family: OpenSansCondensed;
 }
 
 input[type=text], #venueSearch select {
@@ -209,6 +208,16 @@ input[type=text], #venueSearch select {
 
 #textResults {
   color: #CD2634;
+}
+
+#textResults #venueList li {
+  cursor: pointer;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #CD2634;
+}
+
+#textResults #venueList li:hover {
+  color: #E78829;
 }
 
 #map {
@@ -275,25 +284,30 @@ label {
   -webkit-overflow-scrolling: touch;
 }
 
-#savedVenues li { 
-  border: 1px solid #44918B;
-}
-
 .clicked {
   background-color: #B5DEDA
 }
 
-.recentSearchItem {
+#recentSearches {
+  padding: 10px;
+  background-color: rgba(200,50,50,0.1);
+  margin: 0 auto 10px;
+}
+
+#recentSearches span {
+  font-weight: bolder;
+}
+
+#recentSearches .recentSearchItem {
   cursor: pointer;
+}
+
+#recentSearches .recentSearchItem:hover, #recentSearches .recentSearchItem:focus {
+  color: #CD2634;
 }
 
 .inner {
   display: inline;
-}
-
-#recentsearches {
-  /*display: none;*/
-  margin: 10px auto;
 }
 
 #logout, #login {
@@ -327,7 +341,8 @@ label {
 
 #restaurants li {
   cursor: pointer;
-  color: #44918B;
+  margin-bottom: 10px;
+  border: 1px solid #CD2634;
 }
 
 #restaurants li:hover {
