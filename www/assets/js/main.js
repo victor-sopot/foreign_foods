@@ -74,6 +74,7 @@ $(document).ready(function(){
 	});
 
 	hoodie.store.on('search:add', function(search){
+		$("#recentSearches").html('');
 		$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
 	});
 
@@ -160,6 +161,20 @@ $(document).ready(function(){
 	$("#locateBtn").on('click', function(){
 			//todo
 	});
+
+	$("#clearRecents").on('click', function(event){
+		event.preventDefault();
+
+		hoodie.store.removeAll('search')
+		.fail(function(error){
+			alert("Couldn't remove searches, " + error)
+		})
+
+	});
+
+	hoodie.store.on('search:remove', function(removedObject){
+		$("#recentSearches").html('<span class="meta">Your recent searches will appear here</span>');
+	})
 
 	function runSearchQuery(loc, category, categoryName){
 		$("#loader1").toggle();

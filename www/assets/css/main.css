@@ -27,10 +27,6 @@ a {
     color: #CD2634;
 }
 
-a:visited {
-    color: #551a8b;
-}
-
 a:hover {
     color: #4FB0A9;
 }
@@ -165,7 +161,6 @@ body {
 
 #mainboard, #welcome {
   text-align: center;
-  font-size: 1.7rem;
 }
 
 #mainboard a {
@@ -288,10 +283,16 @@ label {
   background-color: #B5DEDA
 }
 
-#recentSearches {
+#recentsWrap {
   padding: 10px;
   background-color: rgba(200,50,50,0.1);
   margin: 0 auto 10px;
+}
+
+#recentsWrap #clearRecents {
+  position: relative;
+  bottom: 0;
+  left: 90%;
 }
 
 #recentSearches span {
@@ -308,6 +309,10 @@ label {
 
 .inner {
   display: inline;
+}
+
+#getStarted {
+  margin: 50px auto;
 }
 
 #logout, #login {
@@ -329,6 +334,20 @@ label {
 .btn-account:hover {
   color: white !important;
   background-color: #DEA795 !important;
+}
+
+.btn-get-started {
+  font-family: Bebas, sans-serif;
+  color: white;
+  background-color: #CD2634;
+}
+.btn-get-started.focus,
+.btn-get-started:focus {
+  color: white;
+}
+
+.btn-get-started:hover {
+  color: white;
 }
 
 .btn-login {
@@ -450,6 +469,12 @@ label {
   background-color: #CD2634;
   text-align: center;
   font-family: Bebas;
+}
+
+/* Welcome page */
+#intro-text {
+  display: none;
+  height: 500px;
 }
 
 /* ==========================================================================
