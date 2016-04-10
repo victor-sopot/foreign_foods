@@ -74,7 +74,6 @@ $(document).ready(function(){
 	});
 
 	hoodie.store.on('search:add', function(search){
-		$("#recentSearches").html('');
 		$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
 	});
 

@@ -171,22 +171,10 @@ body {
   font-family: OpenSansCondensed;
 }
 
-input[type=text], #venueSearch select {
+#venueSearch select {
   color: #CD2634;
-  border: 1px solid #CD2634;
+  border: 1px solid #CD2634 !important;
   border-radius: 3px;
-}
-
-#search {
-  background-color: #CD2634;
-  color: white;
-  font-family: Bebas, sans-serif;
-  height: 50px;
-  width: 100px;
-  margin: 0 auto;
-
-  border-radius: 0;
-  border: none;
 }
 
 #resultsPane {
@@ -319,9 +307,27 @@ label {
   display: none;
 }
 
+.btn-main {
+  background-color: #CD2634;
+  color: white;
+  font-family: Bebas, sans-serif;
+  height: 50px;
+  width: 100px;
+  margin: 0 auto;
+  border-radius: 0;
+  border: none;}
+
+.btn-main:focus,
+.btn-main.focus {
+  color: white !important;
+}
+
+.btn-main:hover {
+  color: white !important;
+}
+
 .btn-account {
   color: white !important;
-  background-color: #DE8154 !important;
   padding: 15px;
 }
 
