@@ -30,9 +30,7 @@
     "start": "node node_modules/hoodie-server/bin/start"
   },
   "type": "app",
-  "gitHead": "33fdb70357c415bbed56bbbd5197c805c0264294",
   "description": "[![Dependency Status](https://david-dm.org/hoodiehq/my-first-hoodie.svg)](https://david-dm.org/hoodiehq/my-first-hoodie)",
-  "_id": "my-first-hoodie@3.2.1",
   "_shasum": "240df30b9664e56a04bb2ba2ad26c52e5691d763",
   "_from": "my-first-hoodie@3.2.1",
   "_npmVersion": "2.13.0",
@@ -46,12 +44,23 @@
     "tarball": "http://registry.npmjs.org/my-first-hoodie/-/my-first-hoodie-3.2.1.tgz"
   },
   "maintainers": [
-    {
-      "name": "adamsofokleous",
-      "email": "adamcyp@icloud.com"
-    }
+    "adamsofokleous <adamcyp@icloud.com>"
   ],
   "directories": {},
   "_resolved": "https://registry.npmjs.org/my-first-hoodie/-/my-first-hoodie-3.2.1.tgz",
-  "readme": "ERROR: No README data found!"
+  "main": "www/index.html",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victor-sopot/foreign_foods.git"
+  },
+  "keywords": [
+    "hoodie"
+  ],
+  "author": "Adam Sofokleous",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/victor-sopot/foreign_foods/issues"
+  },
+  "homepage": "https://github.com/victor-sopot/foreign_foods#readme"
 }
