@@ -1,6 +1,6 @@
 "use strict";
 //Init hoodie
-var appback = new Appback();
+var appback = new Appback('https://foreign.appback.com/');
 
 $(document).ready(function(){
 
