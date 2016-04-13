@@ -1,6 +1,6 @@
 "use strict";
 //Init hoodie
-var hoodie = new Hoodie();
+var appback = new Appback();
 
 $(document).ready(function(){
 
