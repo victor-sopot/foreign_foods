@@ -38,7 +38,7 @@ $(document).ready(function(){
 	  	var password  = $('#password').val();
 	  	hoodie.account.signIn(username, password)
 	    	.done(function (user) {
-	    		window.location = "index.html";
+	    		window.location = "search.html";
 	    	})
 	    	.fail(showErrorMessage);
 	});
@@ -49,7 +49,7 @@ $(document).ready(function(){
 		var new_password = $("#new_password").val();
 		hoodie.account.signUp(new_username, new_password)
 			.done(function (user) {
-	    		window.location = "index.html";
+	    		window.location = "search.html";
 			})
 			.fail(showErrorMessage);
 	});
@@ -57,7 +57,7 @@ $(document).ready(function(){
 	$("#logout").on('click', function(){
 		hoodie.account.signOut({ignoreLocalChanges: true})
   		.done(function (user) {
-  			window.location = "index.html";
+  			window.location = "loggedout.html";
   		})
   		.fail(showErrorMessage);
 	});
@@ -301,25 +301,28 @@ $(document).ready(function(){
 	function retreiveVenues(object)
 	{
 		var id;
+		var counter;
 		$("#restaurantSide button").removeAttr("disabled");
 		$.each(object, function(key, object) {
 				console.log(object);
-				$("#restaurants ul").append($("<li data-created='"+ object.createdAt + "' data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
-			})
-			$("#restaurants li").on('click', function(event){
-				event.preventDefault();
-				$("#info #meta").text('Added At: 4:54pm 21st January 2016 by Muhammad Ali');
-
-				$("#rest_title").text($(this).attr('data-name'));
-				$("#info #address").html("<span class='glyphicon glyphicon-bookmark'></span> " + $(this).attr('data-address'));
-				$("#info #street").text($(this).attr('data-street'));
-				$("#info #city").text($(this).attr('data-city'));
-				$("#info #postcode").text($(this).attr('data-postcode'));
-				$("#info #tel").html("<span class='glyphicon glyphicon-earphone'></span> " + $(this).attr('data-tel'));
-				$("#info #url").html("<a href='" + $(this).attr('data-url') + "' target='_blank'>" + $(this).attr('data-url') + "</a>");
-
-				$(this).attr('data-selected', 'true');
-				id = $(this).attr('data-id');
+				//$("#restaurants ul").append($("<li data-created='"+ object.createdAt + "' data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
+				$("#accordion").append($(" <div class='panel panel-default'><div class='panel-heading' role='tab' id='heading" 
+					+ key + "'><h4 class='panel-title'><a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse" 
+					+ key + "' aria-expanded='true' aria-controls='collapse" 
+					+ key + "'><img src='"
+					+ object.iconp + "bg_32"
+					+ object.icons + "'>" 
+					+ object.name + "</a></h4></div><div id='collapse" 
+					+ key + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading" 
+					+ key + "'><div id='info' class='panel-body'><p id='meta'>"
+					+ object.createdAt + "</p><p id='address'>"
+					+ object.address + "</p><p id='street'>"
+					+ object.street + "</p><p id='city'>"
+					+ object.city +"</p><p id='postcode'>"
+					+ object.postcode +"</p><p id='tel'>"
+					+ object.tel+"</p><a id='url' href='"
+					+ object.url+ "'>" 
+					+ object.url + "</p></div></div></div>"));
 			})
 
 			$("#deleteVenue").on('click', function(event){
