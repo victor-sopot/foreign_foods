@@ -1,14 +1,14 @@
 "use strict";
-//Init hoodie
+//Init appback
 var appback = new Appback('https://foreign.appback.com/');
 
 $(document).ready(function(){
 
-	console.log(hoodie);
+	console.log(appback);
 	// Check if there's a user logged in
-	if (hoodie.account.username)
+	if (appback.account.username)
 	{
-		logged_in(hoodie.account.username);
+		logged_in(appback.account.username);
 	} else {
 		not_logged_in();
 	}
@@ -36,7 +36,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		var username  = $('#username').val();
 	  	var password  = $('#password').val();
-	  	hoodie.account.signIn(username, password)
+	  	appback.account.signIn(username, password)
 	    	.done(function (user) {
 	    		window.location = "index.html";
 	    	})
@@ -47,22 +47,22 @@ $(document).ready(function(){
 		event.preventDefault();
 		var new_username = $("#new_username").val();
 		var new_password = $("#new_password").val();
-		hoodie.account.signUp(new_username, new_password)
+		appback.account.signUp(new_username, new_password)
 			.done(function (user) {
-	    		window.location = "index.html";
+	    		window.location = "search.html";
 			})
 			.fail(showErrorMessage);
 	});
 
 	$("#logout").on('click', function(){
-		hoodie.account.signOut({ignoreLocalChanges: true})
+		appback.account.signOut({ignoreLocalChanges: true})
   		.done(function (user) {
-  			window.location = "index.html";
+  			window.location = "loggedout.html";
   		})
   		.fail(showErrorMessage);
 	});
 
-	hoodie.store.findAll('search')
+	appback.store.findAll('search')
 	.done(function(recentsearches){
 		$.each(recentsearches, function(key, search){
 			$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
@@ -73,7 +73,7 @@ $(document).ready(function(){
 		console.log('Something went wrong: ' + error);
 	});
 
-	hoodie.store.on('search:add', function(search){
+	appback.store.on('search:add', function(search){
 		$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
 	});
 
@@ -84,7 +84,7 @@ $(document).ready(function(){
 		var id = $(this).attr('data-id');
 		console.log(id);
 
-		hoodie.store.find('search', id)
+		appback.store.find('search', id)
 		.done(function(search){
 			runSearchQuery(search.location, search.categoryId, search.categoryName);
 		})
@@ -99,7 +99,7 @@ $(document).ready(function(){
 		var category = $("#cuisineInput option:selected").val();
 		var categoryTxt = $("#cuisineInput option:selected").text();
 
-		hoodie.store.add('search', {
+		appback.store.add('search', {
 			location: loc,
 			categoryId: category,
 			categoryName: categoryTxt
@@ -134,7 +134,7 @@ $(document).ready(function(){
 		var iconPrefix = $("#selectedRest").attr('data-i-prefix');
 		var iconSuffix = $("#selectedRest").attr('data-i-suffix');
 
-		hoodie.store.add('venue', { 
+		appback.store.add('venue', { 
 			name : name, 
 			coords : latlng, 
 			address: address, 
@@ -164,14 +164,14 @@ $(document).ready(function(){
 	$("#clearRecents").on('click', function(event){
 		event.preventDefault();
 
-		hoodie.store.removeAll('search')
+		appback.store.removeAll('search')
 		.fail(function(error){
 			alert("Couldn't remove searches, " + error)
 		})
 
 	});
 
-	hoodie.store.on('search:remove', function(removedObject){
+	appback.store.on('search:remove', function(removedObject){
 		$("#recentSearches").html('<span class="meta">Your recent searches will appear here</span>');
 	})
 
@@ -285,7 +285,7 @@ $(document).ready(function(){
 	})
 
 	function findVenues() {
-		hoodie.store.findAll('venue')
+		appback.store.findAll('venue')
 		.done(function(allVenues) {
 			// LOOP THE VENUES //
 			if (allVenues.length == 0) {
@@ -325,7 +325,7 @@ $(document).ready(function(){
 			$("#deleteVenue").on('click', function(event){
 				event.preventDefault();
 			    if (confirm("Are you sure?") == true) {
-		        	hoodie.store.remove('venue', id)
+		        	appback.store.remove('venue', id)
 		        	.done(function(removedVenue) {
 		        		alert(removedVenue.name + ' has been removed from your account.')
 		        		window.location = "my-restaurants.html";
