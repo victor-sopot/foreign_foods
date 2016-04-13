@@ -94,7 +94,8 @@ $(document).ready(function(){
 	});
 
 	// Take the location in the input box and the category then query foursquare API with them
-	$("#search").on('click', function() {
+	$("#searchForm").submit(function(event) {
+		event.preventDefault();
 		var loc = $("#locInput").val();
 		var category = $("#cuisineInput option:selected").val();
 		var categoryTxt = $("#cuisineInput option:selected").text();
