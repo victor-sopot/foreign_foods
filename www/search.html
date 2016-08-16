@@ -53,41 +53,10 @@
     <body>
     <div id="headwrap">
         <div class="container">
-            <nav class="navbar navbar-default navbar-fixed-top">
-              <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="main.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
-                </div>
+            <div class="container">
+                <nav data-ng-menuBar class="navbar navbar-default navbar-fixed-top"></nav>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="search.html">Search <span class="sr-only">(current)</span></a></li>
-                        <li><a href="my-restaurants.html">My Restaurants</a></li>
-                        </ul>
-                    <div id="useractions">
-                        <p class="navbar-text navbar-right"><a class="btn-account" id="logout" href="login.html">Logout</a></p>
-                        <p class="navbar-text navbar-right"><a class="btn-login" id="login" href="login.html">Login</a></p>
-                        <p class="navbar-text navbar-right"><a class="btn-register" id="register" href="register.html">Register</a></p>
-                        <p class="navbar-text navbar-right"><span id="currentUser" class="navbar-link"></span></p>
-                    </div> <!-- /#useractions -->
-                </div><!-- /.navbar-collapse -->
-              </div><!-- /.container-fluid -->
-            </nav>
-
-            <div class="row" id="titleheader">
-                <div class="col-md-12">
-                    <div id="banner">
-                        <h1 class="pageTitle">Find Foreign Food</h1>
-                    </div>
-                </div>
+                <div data-ng-pageHeader class="row" id="titleheader"></div>
             </div>
         </div>
     </div>
@@ -205,6 +174,8 @@
 
         <!-- Google Maps -->
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWX09Ik2jlbjpjHzN9c59zO_2H9JYQlsE&region=GB" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="assets/vendor/angular.min.js"></script>
         <script src="assets/vendor/jquery-2.1.4.min.js"></script>
         <script src="assets/js/jquery.easing.1.3.js"></script>
         <script src="/_api/_files/hoodie.js"></script>
