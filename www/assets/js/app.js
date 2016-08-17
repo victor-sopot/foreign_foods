@@ -14,11 +14,20 @@ var app = angular.module('foreign', [
 // 	// .otherwise("/404", {templateUrl: "partials/404.html", controller: "PageCtrl"});
 // }]);
 
+app.controller('SignupForm', function($scope){
+	$scope.signupInfo = {};
+	$scope.registerUser = function() {
+		console.log($scope.signupInfo);
+		console.log('Register user with Hoodie here');
+	}
+});
+
 app.controller('CheckLogin', function($scope){
 	console.log('Hello World');
-	$scope.formInfo = {};
+	$scope.loginInfo = {};
 	$scope.saveData = function() {
-
+		console.log($scope.loginInfo);
+		console.log('Login user with Hoodie here');
 	}
 });
 
