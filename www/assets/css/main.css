@@ -271,13 +271,18 @@ label {
   background-color: #B5DEDA
 }
 
-#recentsWrap {
+.recentsWrap {
+  height: 100px;
+}
+
+#recentsList {
+  display: none;
   padding: 10px;
   background-color: rgba(200,50,50,0.1);
   margin: 0 auto 10px;
 }
 
-#recentsWrap #clearRecents {
+#recentsList #clearRecents {
   position: relative;
   bottom: 0;
   left: 90%;
@@ -315,7 +320,8 @@ label {
   width: 100px;
   margin: 0 auto;
   border-radius: 0;
-  border: none;}
+  border: none;
+}
 
 .btn-main:focus,
 .btn-main.focus {
@@ -339,7 +345,7 @@ label {
 
 .btn-account:hover {
   color: white !important;
-  background-color: #DEA795 !important;
+  background-color: transparent !important;
 }
 
 .btn-get-started {
@@ -358,6 +364,10 @@ label {
 
 .btn-login {
   color: #222;
+}
+
+.btn-getloc {
+  color: #CD2634 !important;
 }
 
 #mainRestaurantWrap {

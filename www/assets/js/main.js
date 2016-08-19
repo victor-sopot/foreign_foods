@@ -62,20 +62,14 @@ $(document).ready(function(){
   		.fail(showErrorMessage);
 	});
 
-	hoodie.store.findAll('search')
-	.done(function(recentsearches){
-		$.each(recentsearches, function(key, search){
-			$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
-			console.log(recentsearches);
-		})
-	})
-	.fail(function(error){
-		console.log('Something went wrong: ' + error);
-	});
-
 	hoodie.store.on('search:add', function(search){
 		$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
 	});
+
+	$('#viewRecents').on('click', function(event){
+		event.preventDefault();
+		getRecentSearches();
+	})
 
 	//As #recentsearches li's are dynamically added a few lines above, 
 	// I needed to use the 'document' selector to act as the listener element
@@ -119,9 +113,16 @@ $(document).ready(function(){
 		}
 	});
 
+	$("#getCoords").on('click', function(){
+		$("#loader1").toggle();
+		getUserLocation()	
+	})
+
 	$("#tryagain").on('click', function() {
 		$("#locInput").focus();
 	})
+
+
 
 	$("#saveRestaurant").on('click', function () {
 		var name = $("#selectedRest").attr('data-name');
@@ -176,6 +177,12 @@ $(document).ready(function(){
 		$("#recentSearches").html('<span class="meta">Your recent searches will appear here</span>');
 	})
 
+	$("#venueSector button").on('click', function(){
+		var sectionQuery = $(this).text();
+		var llQuery = $("#userLoc").text();
+		runExploreQuery(llQuery, sectionQuery);
+	})
+
 	function runSearchQuery(loc, category, categoryName){
 		$("#loader1").toggle();
 		$.ajax({
@@ -184,7 +191,7 @@ $(document).ready(function(){
 				near: loc,
 				limit: 50,
 				intent: 'browse',
-				categoryId: category,
+				//categoryId: category,
 				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
 				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
 				v: 20151230,
@@ -274,6 +281,105 @@ $(document).ready(function(){
 				$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
 			}
 		})
+	}
+
+	function runExploreQuery (ll, sectionQuery){
+		$("#loader1").toggle();
+		$.ajax({
+			url: 'https://api.foursquare.com/v2/venues/explore',
+			data: {
+				ll: ll,
+				limit: 50,
+				section: sectionQuery,
+				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
+				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
+				v: 20151230,
+				m: 'foursquare'
+			},
+			statusCode: {
+				400: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				401: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				403: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				404: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				405: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				409: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				},
+				500: function() {
+					$("#loader1").toggle();
+					$('#errorResponse').show();
+				}
+			}
+		})
+		// Plot them on Google Map
+		.done(function(response){
+			
+			// Hide the loader spinner
+			$("#loader1").toggle();
+			// Hide the error window
+			$("#errorResponse").hide();
+
+			// Once the reqeust has returned, clear the existing markers
+			clearMarkers();
+
+			// Reset the text results list
+			$("#venueList").html("");
+
+			//Scroll down to map
+			$('html, body').animate({
+	        	scrollTop: $("#resultsWrap").offset().top
+	    	}, 1200);
+
+			// Grab Fourequare response data assuming it's a good request.
+			var venues = response.response.groups[0].items;
+			// var responseGeocode = response.response.groups[0].items.;
+			// var geocode = new google.maps.LatLng(responseGeocode.lat, responseGeocode.lng);
+			// map.panTo(geocode);
+			$.each(venues, function(key, venues) {
+				var venueID = venues.venue.id;
+				var name = venues.venue.name;
+				var lat = venues.venue.location.lat;
+				var lng = venues.venue.location.lng;
+				var latlng = new google.maps.LatLng(lat,lng);
+				var marker = new google.maps.Marker({
+					position: latlng,
+					title: name
+				});
+				marker.addListener('click', function() {
+					runSingleQuery(venueID, name, latlng);
+				})
+				markers.push(marker);
+				setMarkers(map);
+
+
+				$("#textResults > h4").text(sectionQuery + ' places near you!');
+				$("#venueList").append('<li data-latlng="'+ latlng +'" data-id="'+ venueID +'">' + name + '</li>');
+
+			});
+		})
+		.fail(function(response){
+			if (response.responseJSON.meta.errorType == 'failed_geocode') {
+				$("#errorText").html('<strong>Uhoh! Couldn\'t find that location. Try using searching by city & country: </strong><br /><br /><strong>bristol, uk</strong> or <strong>north carolina, usa</strong><br /><br /><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>')
+			} else if (response.responseJSON.meta.errorType == 'param_error') {
+				$('#errorText').html('<strong>Whoops! Your query was invalid. Please make sure you select a cuisine type. </strong><p>"' + response.responseJSON.meta.errorType + ': ' + response.responseJSON.meta.errorDetail + '"</p>');
+			}
+		})	
 	}
 
 	$(document).on('click', '#textResults li', function(event){
@@ -455,7 +561,7 @@ $(document).ready(function(){
 			var street = getProperty(venue.location, 'crossStreet');
 			var city = getProperty(venue.location, 'city');			
 			var postcode = getProperty(venue.location, 'postalCode');
-			var url = getProperty(venue, 'url');
+			var urls = getProperty(venue, 'url');
 			var iconPrefix = getProperty(venue.categories[0].icon, 'prefix');
 			var iconSuffix = getProperty(venue.categories[0].icon, 'suffix');
 
@@ -486,7 +592,7 @@ $(document).ready(function(){
 			$("#selectedRest").attr('data-city', city);
 			$("#selectedRest").attr('data-postcode', postcode);
 			$("#selectedRest").attr('data-tel', venueTel);
-			$("#selectedRest").attr('data-url', url);
+			$("#selectedRest").attr('data-url', urls);
 			$("#selectedRest").attr('data-i-prefix', iconPrefix);
 			$("#selectedRest").attr('data-i-suffix', iconSuffix);
 
@@ -496,12 +602,59 @@ $(document).ready(function(){
 			$("<dt>City: </dt><dd>" + city + "</dd>").appendTo("#address");
 			$("<dt>Postcode: </dt><dd>" + postcode + "</dd>").appendTo("#address");
 			$("<dt>Telephone: </dt><dd>" + venueTel + "</dd>").appendTo("#address");
-			$("<dt>URL: </dt><dd>" + url + "</dd>").appendTo("#address");
+			$("<dt>URL: </dt><dd>" + urls + "</dd>").appendTo("#address");
 
 			$('html, body').animate({
     	    	scrollTop: $("#selectedRest").offset().top
    	 		}, 1200);
 		});
+	}
+
+	function getRecentSearches(){
+		hoodie.store.findAll('search')
+		.done(function(recentsearches){
+			$.each(recentsearches, function(key, search){
+				$("#recentSearches").append('<li class="recentSearchItem meta" data-id="'+ search.id +'">' + search.location + ', for ' + search.categoryName);
+			})
+		})
+		.then(function(){
+			//update ui
+			$("#recentsList").fadeToggle();
+		})
+		.fail(function(error){
+			console.log('Something went wrong: ' + error);
+		});
+	}
+
+	function applyLocationToSearch(currentLoc){
+		var userLat = currentLoc.latitude;
+		var userLng = currentLoc.longitude;
+
+		var query = userLat + ',' + userLng; 
+
+		$('#userLoc').text(query);
+		$('#cuisineInput').focus();
+	}
+
+	function getUserLocation(){
+		var options = {
+			enableHighAccuracy: true,
+			timeout: 5000,
+			maximumAge: 0
+		};
+
+		function success(pos) {
+			$("#loader1").toggle();
+			var currentLoc = pos.coords;
+			applyLocationToSearch(currentLoc);
+		};
+
+		function error(err) {
+			$("#loader1").toggle();
+			console.warn('ERROR(' + err.code + '): ' + err.message);
+		};
+
+		navigator.geolocation.getCurrentPosition(success, error, options);
 	}
 
 	function getProperty(object, property){

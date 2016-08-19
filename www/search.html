@@ -114,37 +114,91 @@
                     <h4 class="panelTitle">Search for foreign foods in your area!</h4 class="panelTitle">
             </div>
         </div>
-        <form id="searchForm">
-            <div class="form-group">
-                <label for="locInput">Enter Location</label>
-                <input required id="locInput" type="text" class="form-control input-lg">
-                
-                <div id="recentsWrap">
-                    <ul id="recentSearches" class="list-inline">
-                        <span class="meta">You recently searched: </span>
-                    </ul>
-                    <a href="#" id="clearRecents">clear</a>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="cuisineInput">Choose a cuisine</label>
-                <select required id="cuisineInput" class="form-control input-lg">
-                </select>       
-            </div>
 
-            <div class="row center">
-                <div class="col-md-12">
-                    <button id="search" type="button" class="btn btn-main">Go!</button>
-                    <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
-                </div>
-            </div>
-        </form>
+        <div>
+            <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search!</a></li>
+                <li><a href="#explore" aria-controls="explore" role="tab" data-toggle="tab">Explore!</a></li>
+            </ul>
 
-        <div class="row center" id="errorResponse">
-            <div class="col-md-12">
-                <div class="alert alert-danger" role="alert">
-                    <p id="errorText"></p>
-                    <button id="tryagain" type="button" class="btn btn-default">Try again</button>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="search">
+                    <form id="searchForm">
+                        <div class="form-group">
+                            <label for="locInput">Enter Location</label>
+                                <input required id="locInput" type="text" class="form-control input-lg">
+
+                                <div class="recentsWrap">
+                                    <p class="meta"><a id="viewRecents" href="#">Recents...</a></p>
+                                    
+                                    <div id="recentsList">
+                                        <ul id="recentSearches" class="list-inline">
+                                            <span class="meta">You recently searched for: </span>
+                                        </ul>
+                                        <a href="#" class="clearRecents">clear</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cuisineForm form-group">
+                                <label for="cuisineInput">Choose a cuisine</label>
+                                <select required id="cuisineInput" class="form-control input-lg">
+                                </select>       
+                            </div>
+
+                            <div class="row center">
+                                <div class="col-md-12">
+                                    <button id="search" type="button" class="btn btn-main">Go!</button>
+                                    <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row center" id="errorResponse">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <p id="errorText"></p>
+                                    <button id="tryagain" type="button" class="btn btn-default">Try again</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="explore">
+                    <form id="exploreForm">
+                        <div class="form-group">
+                            <button id="getCoords" type="button" class="btn btn-lg btn-default">
+                                <span class="glyphicon glyphicon-screenshot"></span> Locate You
+                            </button>
+
+                            <p id="userLoc" class="bg-info"></p>
+                        </div>
+                            <div id="venueSector" class="btn-group" role="group">
+                                <button type="button" class="btn btn-default">food</button>
+                                <button type="button" class="btn btn-default">drinks</button>
+                                <button type="button" class="btn btn-default">coffee</button>
+                                <button type="button" class="btn btn-default">shops</button>
+                                <button type="button" class="btn btn-default">arts</button>
+                                <button type="button" class="btn btn-default">outdoors</button>
+                                <button type="button" class="btn btn-default">sights</button>
+                                <button type="button" class="btn btn-default">trending</button>
+                                <button type="button" class="btn btn-default">specials</button>
+                                <button type="button" class="btn btn-default">topPicks</button>
+                            </div>
+
+                            <div class="row center">
+                                <div class="col-md-12">
+                                    <img id="loader1" style="display: none;" src="assets/img/ajax-loader.gif" alt="Loader">
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="row center" id="errorResponse">
+                            <div class="col-md-12">
+                                <div class="alert alert-danger" role="alert">
+                                    <p id="errorText"></p>
+                                    <button id="tryagain" type="button" class="btn btn-default">Try again</button>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
