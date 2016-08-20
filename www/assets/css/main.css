@@ -644,7 +644,7 @@ textarea[contenteditable] {
  * Used to contain floats: h5bp.com/q
  */
 
-.fix:before,
+.clearfix:before,
 .clearfix:after {
     content: "";
     display: table;
