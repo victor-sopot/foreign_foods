@@ -70,7 +70,12 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="search.html">Search <span class="sr-only">(current)</span></a></li>
-                        <li><a href="my-restaurants.html">My Restaurants</a></li>
+                        <li class="dropdown">
+                            <a href="my-restaurants.html" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" role="button" aria-haspopup="true" aria-expanded="false">My Restaurants <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">View All</a></li>
+                            </ul>
+                        </li>
                         </ul>
                     <div id="useractions">
                         <p class="navbar-text navbar-right"><a class="btn-account" id="logout" href="login.html">Logout</a></p>
@@ -115,7 +120,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="row searchForms">
             <ul id="myTabs" class="nav nav-tabs" role="tablist">
                 <li class="active"><a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search!</a></li>
                 <li><a href="#explore" aria-controls="explore" role="tab" data-toggle="tab">Explore!</a></li>
@@ -128,14 +133,15 @@
                             <label for="locInput">Enter Location</label>
                                 <input required id="locInput" type="text" class="form-control input-lg">
 
-                                <div class="recentsWrap">
+                                <div class="recentsWrap"> 
                                     <p class="meta"><a id="viewRecents" href="#">Recents...</a></p>
-                                    
                                     <div id="recentsList">
                                         <ul id="recentSearches" class="list-inline">
-                                            <span class="meta">You recently searched for: </span>
+                                            <p class="meta center">You recently searched for: </p>
                                         </ul>
-                                        <a href="#" class="clearRecents">clear</a>
+                                        <div id="recentsCtrl">
+                                            <a href="#" id="clearRecents">clear</a> - <a href="#" id="closeRecents">close</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -264,6 +270,7 @@
         <script src="/_api/_files/hoodie.js"></script>
 
         <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/bootstrap-hover-dropdown.min.js"></script>
         <script src="assets/js/gmaps.js"></script>
         <script src="assets/js/helper.js"></script>
         <script src="assets/js/plugins.js"></script>

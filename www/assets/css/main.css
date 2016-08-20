@@ -272,7 +272,7 @@ label {
 }
 
 .recentsWrap {
-  height: 100px;
+  height: 120px;
 }
 
 #recentsList {
@@ -282,9 +282,17 @@ label {
   margin: 0 auto 10px;
 }
 
-#recentsList #clearRecents {
+#viewRecents {
+  float: left;
   position: relative;
-  bottom: 0;
+  top: 0;
+  left: 5px;
+}
+
+#recentsList #recentsCtrl {
+  float: left;
+  position: relative;
+  bottom: 10px;
   left: 90%;
 }
 
@@ -493,6 +501,44 @@ label {
   height: 500px;
 }
 
+.tab-content {
+  padding-top: 30px;
+}
+
+#venueSector .btn {
+  padding: 15px 5px;
+}
+
+#venueSector button {
+  transition: 0.5s ease;
+  overflow: hidden;
+}
+
+#venueSector .btn-default:hover {
+  background-color: white;
+  text-decoration: none;
+}
+
+#venueSector button:hover:before {
+  top: 3.2em; 
+}
+
+#venueSector button:before {
+  transition: 1s cubic-bezier(0.01, 1.01, 0.57, 0.96);
+  display: block;
+  background-color: #CD2634;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  content: '';
+
+}
+
+
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -598,7 +644,7 @@ textarea[contenteditable] {
  * Used to contain floats: h5bp.com/q
  */
 
-.clearfix:before,
+.fix:before,
 .clearfix:after {
     content: "";
     display: table;
@@ -636,8 +682,8 @@ textarea[contenteditable] {
 
 @media only screen and (min-width: 768px) {
 
-  .form-group {
-    width: 50%;
+  .searchForms {
+    width: 65%;
     margin-left: auto;
     margin-right: auto;
   }

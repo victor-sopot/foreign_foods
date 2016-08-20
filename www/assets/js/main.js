@@ -27,11 +27,6 @@ $(document).ready(function(){
 	var count = 0;
 	var missingData = false;
 
-	$('#venueTabs a').click(function (e) {
-		e.preventDefault()
-		$(this).tab('show')
-	});
-
 	$("#loginForm").submit(function(event) {
 		event.preventDefault();
 		var username  = $('#username').val();
@@ -172,6 +167,13 @@ $(document).ready(function(){
 		})
 
 	});
+
+	$("#closeRecents").on('click', function(event){
+		event.preventDefault();
+
+		$("#recentsList").fadeToggle();
+		$("#viewRecents").fadeIn();
+	})
 
 	hoodie.store.on('search:remove', function(removedObject){
 		$("#recentSearches").html('<span class="meta">Your recent searches will appear here</span>');
@@ -619,6 +621,7 @@ $(document).ready(function(){
 		})
 		.then(function(){
 			//update ui
+			$("#viewRecents").fadeOut();
 			$("#recentsList").fadeToggle();
 		})
 		.fail(function(error){
