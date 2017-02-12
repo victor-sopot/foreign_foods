@@ -193,7 +193,7 @@ $(document).ready(function(){
 				near: loc,
 				limit: 50,
 				intent: 'browse',
-				//categoryId: category,
+				categoryId: category,
 				client_id: 'J0SLPBITH4EPQDFZC0M3ZXMSR31NAEYGM02OLQB2PVAQKFEI',
 				client_secret: 'WVBFKBRXWZPUBXGPVR0AFBU440DHIQDJA5MKBEEBPZJGBQW0',
 				v: 20151230,
