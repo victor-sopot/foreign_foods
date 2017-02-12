@@ -31,7 +31,7 @@ gulp.task('bundle-scripts', function() {
 		config.bowerDir + 'jquery-easing/jquery.easing.js'
 	]
 	return gulp.src(bower)
-		.pipe(concat('bundle.js'))
+		.pipe(concat('vendor.js'))
 		.pipe(uglify())
 		.pipe(rename({ extname: '.min.js' }))
 		.pipe(gulp.dest('./www/assets/js/'))
