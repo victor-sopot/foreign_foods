@@ -212,8 +212,7 @@
             <div class="col-md-5">
                 <div id="textResults">
                     <h4></h4>
-                    <ul id="venueList">                        
-                    </ul>
+                    <ul id="venue-view"></ul>
                 </div>
             </div>
             <div class="col-md-7">
@@ -257,13 +256,19 @@
             <p>Adam Sofokleous 2016 Creative Technologies Project</p>
         </div>
     </footer>
+        <script type="text/template" id="venue-item-tmpl">
+          <li data-latlng="<%= latlng %>" data-id="<%= venueID %>"><%= name %></li>
+        </script>
+        <!-- Vendor Dependencies (bower) -->
+        <script src="assets/js/vendor.min.js"></script>
+
+        <!-- App backbone  -->
+        <script type="text/javascript" src="assets/js/app.js"></script>
 
         <!-- Google Maps -->
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWX09Ik2jlbjpjHzN9c59zO_2H9JYQlsE&region=GB" type="text/javascript"></script>
 
         <script src="/_api/_files/hoodie.js"></script>
-        <script src="assets/js/vendor.min.js"></script>
-
         <script src="assets/js/bootstrap-hover-dropdown.min.js"></script>
         <script src="assets/js/gmaps.js"></script>
         <script src="assets/js/helper.js"></script>

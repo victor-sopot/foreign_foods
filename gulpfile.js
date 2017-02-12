@@ -9,12 +9,14 @@ var browserSync = require('browser-sync'),
 
 var config = {
 	bowerDir: './bower_components/',
+	src: './src/',
 	dest: './www/assets/js/'
 }
 
 
-gulp.task('default', ['bundle-scripts'], function() {
+gulp.task('default', ['bundle-bower', 'bundle-scripts'], function() {
   // place code for your default task here
+  
 });
 
 gulp.task('bower', function() {
@@ -23,6 +25,17 @@ gulp.task('bower', function() {
 });
 
 gulp.task('bundle-scripts', function() {
+	var scripts = [
+		config.src + 'js/models.js',
+		config.src + 'js/views.js',
+		config.src + 'js/main.js',
+	]
+	return gulp.src(scripts)
+		.pipe(concat('app.js'))
+		.pipe(gulp.dest('./www/assets/js'))
+})
+
+gulp.task('bundle-bower', function() {
 	var bower = [
 		config.bowerDir + 'jquery/dist/jquery.js',
 		config.bowerDir + 'underscore/underscore.js',
