@@ -17,5 +17,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery-easing": "*",
+    "bootstrap": "^3.3.7"
+  }
 }
