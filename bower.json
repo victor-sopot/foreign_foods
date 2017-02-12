@@ -1,0 +1,21 @@
+{
+  "name": "foreign_foods",
+  "description": "Find Foreign Food near you",
+  "main": "./www/assets/js/main.js",
+  "authors": [
+    "Adam Sofokleous"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "hoodie"
+  ],
+  "homepage": "https://github.com/victor-sopot/foreign_foods",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
