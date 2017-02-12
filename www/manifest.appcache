@@ -1,0 +1,33 @@
+CACHE MANIFEST
+# rev 2 - 2016-03-23
+
+CACHE:
+/assets/css/main.css
+/assets/css/bootstrap.css
+/assets/fonts/bebas-webfont.ttf
+/assets/fonts/RobotoSlab-Regular.ttf
+/assets/fonts/Diner-Fatt-webfont.ttf
+/assets/fonts/Kaushan.otf
+/assets/fonts/OpenSans-CondLight.ttf
+/assets/img/ajax-loader.gif
+/assets/img/banner.png
+/assets/js/bootstrap.min.js
+/assets/js/helper.js
+/assets/js/main.js
+/assets/js/plugins.js
+/assets/vendor/jquery-2.1.4.min.js
+/assets/vendor/modernizr-2.7.1.min.js
+/assets/img/touch/apple-touch-icon-144x144-precomposed.png
+/assets/img/touch/apple-touch-icon-114x114-precomposed.png
+/assets/img/touch/apple-touch-icon-72x72-precomposed.png
+/assets/img/touch/apple-touch-icon-57x57-precomposed.png
+/assets/img/touch/touch-icon-196x196.png
+assets/img/touch/apple-touch-icon.png
+
+NETWORK:
+/_api
+https://maps.googleapis.com/
+
+FALLBACK:
+/search.html /search-offline.html
+/my-restaurants.html /my-restaurants.html

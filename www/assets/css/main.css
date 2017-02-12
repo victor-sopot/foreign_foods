@@ -9,6 +9,10 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
+html {
+  position: relative;
+  min-height: 100%;
+}
 
 html,
 button,
@@ -21,10 +25,6 @@ textarea {
 
 a {
     color: #CD2634;
-}
-
-a:visited {
-    color: #551a8b;
 }
 
 a:hover {
@@ -96,34 +96,39 @@ textarea {
 }
 
 @font-face {
+  font-family: Roboto;
+  src: url('../fonts/RobotoSlab-Regular.ttf') format('truetype');
+}
+
+@font-face {
   font-family: OpenSansCondensed;
   src: url('../fonts/OpenSans-CondLight.ttf') format('truetype');
 }
 
 body {
-  font-family: OpenSansCondensed, sans-serif;
+  font-family: Roboto, sans-serif;
   background-color: rgb(255,255,255);
 
   padding-top: 50px;
+  margin-bottom: 60px;
 }
 
 #headwrap {
-width: 100%;
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#faf6c8+0,7db9e8+100&1+0,0+100 */
-background: -moz-linear-gradient(top,  rgba(250,246,200,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top,  rgba(250,246,200,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom,  rgba(250,246,200,1) 0%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf6c8', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+  width: 100%;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#faf6c8+0,7db9e8+100&1+0,0+100 */
+  background: -moz-linear-gradient(top,  rgba(250,246,200,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  rgba(250,246,200,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  rgba(250,246,200,1) 0%,rgba(125,185,232,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf6c8', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
 }
 
 .row {
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 .panel {
   background-color: white;
   margin-bottom: 50px;
-
 }
 
 #titleheader {
@@ -137,14 +142,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf6c8', end
 }
 
 #banner {
-  padding: 30px 0;
   margin: auto;
 }
 
 .panelTitle {
   font-family: Kaushan;
   text-align: center;
-  font-size: 4.2rem;
+  font-size: 3rem;
   color: #CD2634; /* Hot rod red */
 }
 
@@ -155,31 +159,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#faf6c8', end
   color: #CD2634; /* Hot rod red */
 }
 
-#mainboard {
+#mainboard, #welcome {
   text-align: center;
-  font-size: 1.7rem;
 }
 
 #mainboard a {
   color: #BF41BD;
 }
 
-input[type=text], #venueSearch select {
-  color: #CD2634;
-  border: 1px solid #CD2634;
-  border-radius: 3px;
+.meta {
+  font-family: OpenSansCondensed;
 }
 
-#search {
-  background-color: #CD2634;
-  color: white;
-  font-family: Bebas, sans-serif;
-  height: 50px;
-  width: 100px;
-  margin: 0 auto;
-
-  border-radius: 0;
-  border: none;
+#venueSearch select {
+  color: #CD2634;
+  border: 1px solid #CD2634 !important;
+  border-radius: 3px;
 }
 
 #resultsPane {
@@ -187,7 +182,25 @@ input[type=text], #venueSearch select {
   width: 100%;
   height: 600px;
   color: white;
-  padding: 20px;
+  padding: 5px;
+
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#textResults {
+  color: #CD2634;
+}
+
+#textResults #venueList li {
+  cursor: pointer;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #CD2634;
+}
+
+#textResults #venueList li:hover {
+  color: #E78829;
 }
 
 #map {
@@ -254,29 +267,81 @@ label {
   -webkit-overflow-scrolling: touch;
 }
 
-#savedVenues li { 
-  border: 1px solid #44918B;
-}
-
 .clicked {
   background-color: #B5DEDA
+}
+
+.recentsWrap {
+  height: 120px;
+}
+
+#recentsList {
+  display: none;
+  padding: 10px;
+  background-color: rgba(200,50,50,0.1);
+  margin: 0 auto 10px;
+}
+
+#viewRecents {
+  float: left;
+  position: relative;
+  top: 0;
+  left: 5px;
+}
+
+#recentsList #recentsCtrl {
+  float: left;
+  position: relative;
+  bottom: 10px;
+  left: 90%;
+}
+
+#recentSearches span {
+  font-weight: bolder;
+}
+
+#recentSearches .recentSearchItem {
+  cursor: pointer;
+}
+
+#recentSearches .recentSearchItem:hover, #recentSearches .recentSearchItem:focus {
+  color: #CD2634;
 }
 
 .inner {
   display: inline;
 }
 
-#userPage {
-  display: none;
+#getStarted {
+  margin: 50px auto;
 }
 
 #logout, #login {
   display: none;
 }
 
+.btn-main {
+  background-color: #CD2634;
+  color: white;
+  font-family: Bebas, sans-serif;
+  height: 50px;
+  width: 100px;
+  margin: 0 auto;
+  border-radius: 0;
+  border: none;
+}
+
+.btn-main:focus,
+.btn-main.focus {
+  color: white !important;
+}
+
+.btn-main:hover {
+  color: white !important;
+}
+
 .btn-account {
   color: white !important;
-  background-color: #DE8154 !important;
   padding: 15px;
 }
 
@@ -288,11 +353,29 @@ label {
 
 .btn-account:hover {
   color: white !important;
-  background-color: #DEA795 !important;
+  background-color: transparent !important;
+}
+
+.btn-get-started {
+  font-family: Bebas, sans-serif;
+  color: white;
+  background-color: #CD2634;
+}
+.btn-get-started.focus,
+.btn-get-started:focus {
+  color: white;
+}
+
+.btn-get-started:hover {
+  color: white;
 }
 
 .btn-login {
   color: #222;
+}
+
+.btn-getloc {
+  color: #CD2634 !important;
 }
 
 #mainRestaurantWrap {
@@ -301,7 +384,8 @@ label {
 
 #restaurants li {
   cursor: pointer;
-  color: #44918B;
+  margin-bottom: 10px;
+  border: 1px solid #CD2634;
 }
 
 #restaurants li:hover {
@@ -398,6 +482,62 @@ label {
 #currentUser:hover {
   color: white !important;
 }
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  color: white;
+  background-color: #CD2634;
+  text-align: center;
+  font-family: Bebas;
+}
+
+/* Welcome page */
+#intro-text {
+  display: none;
+  height: 500px;
+}
+
+.tab-content {
+  padding-top: 30px;
+}
+
+#venueSector .btn {
+  padding: 15px 5px;
+}
+
+#venueSector button {
+  transition: 0.5s ease;
+  overflow: hidden;
+}
+
+#venueSector .btn-default:hover {
+  background-color: white;
+  text-decoration: none;
+}
+
+#venueSector button:hover:before {
+  top: 3.2em; 
+}
+
+#venueSector button:before {
+  transition: 1s cubic-bezier(0.01, 1.01, 0.57, 0.96);
+  display: block;
+  background-color: #CD2634;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  content: '';
+
+}
+
+
 
 /* ==========================================================================
    Helper classes
@@ -542,8 +682,8 @@ textarea[contenteditable] {
 
 @media only screen and (min-width: 768px) {
 
-  .form-group {
-    width: 50%;
+  .searchForms {
+    width: 65%;
     margin-left: auto;
     margin-right: auto;
   }
