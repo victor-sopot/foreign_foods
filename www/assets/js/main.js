@@ -410,29 +410,26 @@ $(document).ready(function(){
 	function retreiveVenues(object)
 	{
 		var id;
-		var counter;
 		$("#restaurantSide button").removeAttr("disabled");
 		$.each(object, function(key, object) {
-				console.log(object);
-				//$("#restaurants ul").append($("<li data-created='"+ object.createdAt + "' data-id='"+ object.id +"' data-name='"+ object.name +"' data-address='"+ object.address +"' data-street='"+ object.street +"' data-city='"+ object.city +"' data-postcode='"+ object.postcode +"' data-tel='"+ object.tel +"' data-url='"+ object.url +"' class='list-group-item inner'><img src='" + object.iconp + "bg_44" + object.icons + "'> " + object.name + "</li>"));
-				$("#accordion").append($(" <div class='panel panel-default'><div class='panel-heading' role='tab' id='heading" 
-					+ key + "'><h4 class='panel-title'><a role='button' data-toggle='collapse' data-parent='#accordion' href='#collapse" 
-					+ key + "' aria-expanded='true' aria-controls='collapse" 
-					+ key + "'><img src='"
-					+ object.iconp + "bg_32"
-					+ object.icons + "'>" 
-					+ object.name + "</a></h4></div><div id='collapse" 
-					+ key + "' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading" 
-					+ key + "'><div id='info' class='panel-body'><p id='meta'>"
-					+ object.createdAt + "</p><p id='address'>"
-					+ object.address + "</p><p id='street'>"
-					+ object.street + "</p><p id='city'>"
-					+ object.city +"</p><p id='postcode'>"
-					+ object.postcode +"</p><p id='tel'>"
-					+ object.tel+"</p><a id='url' href='"
-					+ object.url+ "'>" 
-					+ object.url + "</p></div></div></div>"));
-			})
+			console.log(object);
+            var venue = new VenueModel({
+                name: object.name,
+                iconp: object.iconp,
+                icons: object.icons,
+                createdAt: object.createdAt,
+                address: object.address,
+                street: object.street,
+                city: object.city,
+                postcode: object.postcode,
+                tel: object.tel,
+                url: object.url
+			});
+
+			Venues.add(venue);
+			});
+
+		console.log(Venues);
 
 			$("#deleteVenue").on('click', function(event){
 				event.preventDefault();

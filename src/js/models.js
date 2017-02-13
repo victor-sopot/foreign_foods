@@ -1,5 +1,5 @@
 // my custom backbone stuff will go in here
-var VenuesModel = Backbone.Model.extend({
+var VenueModel = Backbone.Model.extend({
 	defaults: {
 		id: '',
 		address: '',
@@ -18,3 +18,9 @@ var VenuesModel = Backbone.Model.extend({
 		name: ''
 	}
 });
+
+var VenuesCollection = Backbone.Collection.extend({
+	model: VenueModel
+});
+
+var Venues = new VenuesCollection();

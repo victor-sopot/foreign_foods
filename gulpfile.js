@@ -1,4 +1,4 @@
-var browserSync = require('browser-sync'),
+var browserSync = require('browser-sync').create(),
 	gulp = require('gulp'),
 	changed = require('gulp-changed'),
 	jscs = require('gulp-jscs'),
@@ -17,11 +17,6 @@ var config = {
 gulp.task('default', ['bundle-bower', 'bundle-scripts'], function() {
   // place code for your default task here
   
-});
-
-gulp.task('bower', function() {
-	return bower()
-		.pipe(gulp.dest(config.bowerDir))
 });
 
 gulp.task('bundle-scripts', function() {
@@ -48,4 +43,10 @@ gulp.task('bundle-bower', function() {
 		.pipe(uglify())
 		.pipe(rename({ extname: '.min.js' }))
 		.pipe(gulp.dest('./www/assets/js/'))
+});
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        proxy: "127.0.0.1:6001"
+    });
 });
