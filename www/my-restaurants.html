@@ -130,10 +130,41 @@
             <div id="saved-venues-view"></div>
         </div>
 
-        <script src="assets/vendor/jquery-2.1.4.min.js"></script>
-        <script src="assets/js/jquery.easing.1.3.js"></script>
+        <script type="text/template" id="venue-item-tmpl">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="heading">
+                      <h4 class="panel-title">
+                          <a href="#collapse" role="button" data-toggle="collapse" data-parent="#accordion">
+                              <img src="<%= iconp %> bg_32 <%= icons %>">
+
+                              <%= name %>
+                          </a>
+                      </h4>
+                  </div>
+                  <div id="collapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading">
+                      <div id="info" class="panel-body">
+                          <p id="meta"><%= createdAt %></p>
+                          <p id="address"><%= address %></p>
+                          <p id="street"><%= street %></p>
+                          <p id="city"><%= city %></p>
+                          <p id="postcode"><%= postcode %></p>
+                          <p id="tel"><%= tel %></p>
+                          <a href="<%= url %>" id="url"></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </script>
+
+        <!-- Vendor Dependencies (bower) -->
+        <script src="assets/js/vendor.min.js"></script>
+
+        <!-- App backbone  -->
+        <script type="text/javascript" src="assets/js/app.js"></script>
+
+
         <script src="/_api/_files/hoodie.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/bootstrap-hover-dropdown.min.js"></script>
         <script src="assets/js/helper.js"></script>
         <script src="assets/js/plugins.js"></script>

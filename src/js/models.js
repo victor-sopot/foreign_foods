@@ -12,7 +12,7 @@ var VenuesModel = Backbone.Model.extend({
 		postcode: '',
 		street: '',
 		tel: '',
-		type: ''
+		type: '',
 		updatedAt: '',
 		url: '',
 		name: ''
